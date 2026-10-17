@@ -1,0 +1,45 @@
+# Photo credits
+
+All car photos come from Wikimedia Commons (free licenses). Backgrounds were removed for the UI.
+
+- peugeot-208.png - https://commons.wikimedia.org/wiki/File:Peugeot%20e-208%20facelift%20Auto%20Zuerich%202023%201X7A1204.jpg
+- toyota-yaris-hybrid.png - https://commons.wikimedia.org/wiki/File:2020%20Toyota%20Yaris%20Hybrid%20E-Four%20%28Red%29.jpg
+- fiat-500e.png - https://commons.wikimedia.org/wiki/File:Fiat%20500e%20SDQ%2003%202020%202775.jpg
+- volkswagen-polo.png - https://commons.wikimedia.org/wiki/File:VW%20Polo%20IV%209N%203-T%C3%BCrer.jpg
+- hyundai-tucson.png - https://commons.wikimedia.org/wiki/File:Hyundai%20Tucson%20%28NX4%2C%20SWB%29%20PHEV%201X7A1858.jpg
+- volvo-ex30.png - https://commons.wikimedia.org/wiki/File:Volvo%20EX30%20Auto%20Zuerich%202023%201X7A0949.jpg
+- kia-sorento.png - https://commons.wikimedia.org/wiki/File:KIA%20Sorento%202022%20test%20drive%20car%2C%20Forsage%20car%20showroom%2C%20Saint%20Petersburg%20November%202022.jpg
+- mercedes-c-class.png - https://commons.wikimedia.org/wiki/File:Mercedes-Benz%20C%20220%20BlueTEC%20Exclusive%20%28W%20205%29%20%E2%80%93%20Frontansicht%2C%2012.%20Juli%202014%2C%20D%C3%BCsseldorf.jpg
+- bmw-i4.png - https://commons.wikimedia.org/wiki/File:BMW%20i4%20M50%201X7A7379.jpg
+- bmw-4-series.png - https://commons.wikimedia.org/wiki/File:2020%20BMW%204.jpg
+- volkswagen-beetle.png - https://commons.wikimedia.org/wiki/File:Oranger%20VW%20New%20Beetle%2020210524%20DSC09751.jpg
+- tesla-model-3.png - https://commons.wikimedia.org/wiki/File:Tesla%20Model%203%20%282023%29%20Auto%20Zuerich%202023%201X7A1313.jpg
+- volkswagen-polo-blue.png - https://commons.wikimedia.org/wiki/File:Volkswagen%20Polo%20VI%20R-Line%20%282021%29%20Auto%20Zuerich%202021%20IMG%200217.jpg
+- volkswagen-golf.png - https://commons.wikimedia.org/wiki/File:2020%20Volkswagen%20Golf%20Style%201.5%20Front.jpg
+- ford-f-150.png - https://commons.wikimedia.org/wiki/File:Moscow%2C%20Ford%20F-150%2014th%20gen%20black%2C%20Oct%202026%2001.jpg
+- range-rover-sport.png - https://commons.wikimedia.org/wiki/File:Range%20Rover%20Sport%20HST%204.2%20V8%20Supercharged%20-%20Flickr%20-%20The%20Car%20Spy%20%281%29.jpg
+- porsche-panamera.png - https://commons.wikimedia.org/wiki/File:Porsche%20971%20Panamera%20Turbo%201X7A6497.jpg
+- chevrolet-camaro.png - https://commons.wikimedia.org/wiki/File:Camaro%20ZL1%20front%20view.jpg
+- ford-mustang-gt.png - https://commons.wikimedia.org/wiki/File:Leimershof%207.%20US-Car-Treffen%201937%20Ford%20Mustang-20230910-RM-161811.jpg
+- mercedes-amg-gt.png - https://commons.wikimedia.org/wiki/File:D%C3%BClmen%2C%20Automeile%20auf%20dem%20Kartoffelmarkt%2C%20Mercedes%20AMG%20GT%20--%202019%20--%209884.jpg
+- bmw-m4-competition.png - https://commons.wikimedia.org/wiki/File:2024%20BMW%20M4%20Competition%20xDrive%2C%20front%20left%2C%2006-15-2025.jpg
+- mclaren-720s-spider.png - https://commons.wikimedia.org/wiki/File:Mclaren%20720S%20PA280973-PSD.jpg
+- ferrari-laferrari.png - https://commons.wikimedia.org/wiki/File:LaFerrari%20front.jpg
+- lamborghini-aventador.png - https://commons.wikimedia.org/wiki/File:Lamborghini%20Aventador%20Bahrain.jpg
+- lamborghini-huracan-spyder.png - https://commons.wikimedia.org/wiki/File:Lamborghini%20Hurac%C3%A1n%20Evo%20Spyder%20%282%29.jpg
+- mercedes-amg-gt-r.png - https://commons.wikimedia.org/wiki/File:Mercedes-AMG%20R190%20GT%20R%20Roadster%20Speedlegend%20IAA%202021%201X7A0124.jpg
+- lamborghini-aventador-s.png - https://commons.wikimedia.org/wiki/File:Lamborghini%20Aventador%20S%20Roadster%20%2837248144071%29.jpg
+- chevrolet-camaro-zl1.png - https://commons.wikimedia.org/wiki/File:Camaro%20ZL1%20front%20side%20view.jpg
+- bugatti-chiron.png - https://commons.wikimedia.org/wiki/File:Full%20blue%202017%20Bugatti%20Chiron%20at%20Grand%20Basel%202018%20%28Ank%20Kumar%29%2010.jpg
+- jaguar-f-type.png - https://commons.wikimedia.org/wiki/File:Jaguar%20F-Type%20ZP%20Edition%2C%20Auto%202024%2C%20Zurich%20%28PANA0387%29.jpg
+- tesla-model-s.png - https://commons.wikimedia.org/wiki/File:Tesla%20Model%20S%20Plaid%20Autofr%C3%BChling%20Ulm%20IMG%209278.jpg
+- tesla-roadster.png - https://commons.wikimedia.org/wiki/File:Tesla%20Roadster%20-%20Flickr%20-%20The%20Car%20Spy.jpg
+- audi-rs7-sportback.png - https://commons.wikimedia.org/wiki/File:Audi%20RS7%20C8%20at%20IAA%202019%20IMG%200307.jpg
+- bmw-7-series.png - https://commons.wikimedia.org/wiki/File:BMW%207%20series%2C%20Odeonsplatz%2C%20Munich%20%2820250909-P1050537%29.jpg
+- audi-tt-rs.png - https://commons.wikimedia.org/wiki/File:Audi%20TT-RS.jpg
+- audi-a8.png - https://commons.wikimedia.org/wiki/File:Audi%20A8%20D5%20%282021%29%201X7A6342.jpg
+- audi-a6.png - https://commons.wikimedia.org/wiki/File:2018%20Audi%20A6%20TDi%20Quattro%20Front.jpg
+- hyundai-elantra.png - https://commons.wikimedia.org/wiki/File:Hyundai%20Avante%20N%20CN7%20black%20test%20car%20%285%29.jpg
+- nissan-gt-r.png - https://commons.wikimedia.org/wiki/File:Nissan%20GT-R%20R35%20FL3%20T-Spec%20Millennium%20Jade%2001.jpg
+- lamborghini-huracan-evo.png - https://commons.wikimedia.org/wiki/File:Lamborghini%20Hurac%C3%A1n%20Tecnica%201X7A7430.jpg
+- hero.png - https://commons.wikimedia.org/wiki/File:Volvo%20EX30%20Auto%20Zuerich%202023%201X7A0949.jpg

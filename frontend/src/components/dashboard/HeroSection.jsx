@@ -1,7 +1,7 @@
-// HeroSection: big headline, availability chip and the hero car photo (Wikimedia Commons)
+// HeroSection: big headline, availability chip and the hero car cutout (PNG with transparent background, from a Wikimedia Commons photo)
 import { useLanguage } from '../../context/LanguageContext.jsx';
 
-const HERO_PHOTO = 'https://commons.wikimedia.org/wiki/Special:FilePath/Volvo%20EX30%20Auto%20Zuerich%202023%201X7A0949.jpg?width=1200';
+const HERO_PHOTO = '/cars/hero.png';
 
 export default function HeroSection({ availability }) {
   const { t } = useLanguage();
