@@ -175,7 +175,7 @@ Errors always look like `{ "error": { "message": "...", "details": [{ "field", "
 
 1. Push the repo to GitHub.
 2. In [Railway](https://railway.com) create a project -> **Add PostgreSQL**.
-3. **New service -> GitHub repo**, set **Root Directory** to `backend`.
+3. **New service -> GitHub repo**. Setting **Root Directory** to `backend` is optional: the root `package.json` and `railway.json` forward the build and start commands to the backend, so the default root also works.
    `backend/railway.json` sets the start command (`npm run db:migrate && npm start`) and health check `/api/health`.
 4. Service **Variables**:
    - `DATABASE_URL` = `${{Postgres.DATABASE_URL}}` (reference to the Postgres service)
