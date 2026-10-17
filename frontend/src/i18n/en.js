@@ -308,6 +308,8 @@ const en = {
   'paymentPage.pending': 'Waiting for payment',
   'paymentPage.noPending': 'Nothing to pay',
   'paymentPage.noPendingText': 'All your bookings are paid or cancelled.',
+  'chatActions.details': 'Details',
+  'chatActions.book': 'Book',
   'whatsNew.title': "What's new in FreeWay",
   'whatsNew.version': 'Version',
   'whatsNew.deployed': 'deployed on',

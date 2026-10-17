@@ -308,6 +308,8 @@ const he = {
   'paymentPage.pending': 'ממתינות לתשלום',
   'paymentPage.noPending': 'אין מה לשלם',
   'paymentPage.noPendingText': 'כל ההזמנות שלך שולמו או בוטלו.',
+  'chatActions.details': 'פרטים',
+  'chatActions.book': 'הזמנה',
   'whatsNew.title': 'מה חדש ב-FreeWay',
   'whatsNew.version': 'גרסה',
   'whatsNew.deployed': 'עלה לאוויר ב-',

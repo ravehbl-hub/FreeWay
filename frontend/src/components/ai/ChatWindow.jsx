@@ -56,7 +56,7 @@ export default function ChatWindow({ messages, streamingText, sending, error, on
         {messages.map((message, index) => (
           <ChatMessage key={message.id || index} role={message.role} content={message.content} />
         ))}
-        {sending && <ChatMessage role="assistant" content={streamingText || t('common.thinking')} />}
+        {sending && <ChatMessage role="assistant" content={streamingText || t('common.thinking')} streaming />}
         <div ref={bottomRef} />
       </div>
 

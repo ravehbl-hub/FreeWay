@@ -495,3 +495,62 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Vehicle rows under an AI answer */
+.chat-vehicles {
+  display: grid;
+  gap: 8px;
+  margin-top: 8px;
+  max-width: 520px;
+}
+
+.chat-vehicle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 8px 10px;
+}
+
+.chat-vehicle-image {
+  width: 84px;
+  height: 52px;
+  object-fit: contain;
+  background: var(--card-soft);
+  border-radius: 10px;
+  padding: 4px;
+  flex-shrink: 0;
+}
+
+.chat-vehicle-info {
+  display: grid;
+  flex: 1;
+  font-size: 14px;
+}
+
+.chat-vehicle-buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.popup-vehicle {
+  max-width: 480px;
+}
+
+.popup-vehicle-image {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  background: var(--card-soft);
+  border-radius: 14px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 600px) {
+  .chat-vehicle {
+    flex-wrap: wrap;
+  }
+}
