@@ -7,8 +7,8 @@ All car photos come from Wikimedia Commons (free licenses). Backgrounds were rem
 - fiat-500e.png - https://commons.wikimedia.org/wiki/File:Fiat%20500e%20SDQ%2003%202020%202775.jpg
 - volkswagen-polo.png - https://commons.wikimedia.org/wiki/File:VW%20Polo%20IV%209N%203-T%C3%BCrer.jpg
 - hyundai-tucson.png - https://commons.wikimedia.org/wiki/File:Hyundai%20Tucson%20%28NX4%2C%20SWB%29%20PHEV%201X7A1858.jpg
-- volvo-ex30.png - https://commons.wikimedia.org/wiki/File:Volvo%20EX30%20Auto%20Zuerich%202023%201X7A0949.jpg
-- kia-sorento.png - https://commons.wikimedia.org/wiki/File:KIA%20Sorento%202022%20test%20drive%20car%2C%20Forsage%20car%20showroom%2C%20Saint%20Petersburg%20November%202022.jpg
+- volvo-ex30.png - https://commons.wikimedia.org/wiki/File:2024%20Volvo%20EX30%20Front.jpg
+- kia-sorento.png - https://commons.wikimedia.org/wiki/File:2021%20Kia%20Sorento%20LX%20Plus%2C%20Front%20Left%2C%2001-17-2021.jpg
 - mercedes-c-class.png - https://commons.wikimedia.org/wiki/File:Mercedes-Benz%20C%20220%20BlueTEC%20Exclusive%20%28W%20205%29%20%E2%80%93%20Frontansicht%2C%2012.%20Juli%202014%2C%20D%C3%BCsseldorf.jpg
 - bmw-i4.png - https://commons.wikimedia.org/wiki/File:BMW%20i4%20M50%201X7A7379.jpg
 - bmw-4-series.png - https://commons.wikimedia.org/wiki/File:2020%20BMW%204.jpg
@@ -39,7 +39,7 @@ All car photos come from Wikimedia Commons (free licenses). Backgrounds were rem
 - audi-tt-rs.png - https://commons.wikimedia.org/wiki/File:Audi%20TT-RS.jpg
 - audi-a8.png - https://commons.wikimedia.org/wiki/File:Audi%20A8%20D5%20%282021%29%201X7A6342.jpg
 - audi-a6.png - https://commons.wikimedia.org/wiki/File:2018%20Audi%20A6%20TDi%20Quattro%20Front.jpg
-- hyundai-elantra.png - https://commons.wikimedia.org/wiki/File:Hyundai%20Avante%20N%20CN7%20black%20test%20car%20%285%29.jpg
+- hyundai-elantra.png - https://commons.wikimedia.org/wiki/File:2021%20Hyundai%20Elantra%20Limited%20in%20Quartz%20White%2C%20front%20right.jpg
 - nissan-gt-r.png - https://commons.wikimedia.org/wiki/File:Nissan%20GT-R%20R35%20FL3%20T-Spec%20Millennium%20Jade%2001.jpg
 - lamborghini-huracan-evo.png - https://commons.wikimedia.org/wiki/File:Lamborghini%20Hurac%C3%A1n%20Tecnica%201X7A7430.jpg
-- hero.png - https://commons.wikimedia.org/wiki/File:Volvo%20EX30%20Auto%20Zuerich%202023%201X7A0949.jpg
+- hero.png - https://commons.wikimedia.org/wiki/File:2024%20Volvo%20EX30%20Front.jpg
