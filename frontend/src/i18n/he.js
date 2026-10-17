@@ -287,6 +287,15 @@ const he = {
   'validation.seatsRange': 'מספר המושבים חייב להיות מספר שלם בין 1 ל-9',
   'validation.pricePositive': 'המחיר חייב להיות מספר חיובי',
   'validation.co2Min': 'ערך ה-CO2 חייב להיות 0 או יותר',
+
+  // חלון "מה חדש" (מוצג פעם אחת לכל גרסה, ראו src/version.js)
+  'whatsNew.title': 'מה חדש ב-FreeWay',
+  'whatsNew.version': 'גרסה',
+  'whatsNew.gotIt': 'הבנתי',
+  'whatsNew.change.language': 'ממשק בעברית / אנגלית עם פריסה מימין לשמאל (בהגדרות)',
+  'whatsNew.change.google': 'התחברות עם Google בלחיצה אחת',
+  'whatsNew.change.photos': 'תמונות אמיתיות לכל רכב',
+  'whatsNew.change.icon': 'אייקון חדש לעוזר ה-AI בתפריט',
 };
 
 export default he;

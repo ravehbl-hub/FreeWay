@@ -287,6 +287,15 @@ const en = {
   'validation.seatsRange': 'Seats must be a whole number between 1 and 9',
   'validation.pricePositive': 'Price must be a positive number',
   'validation.co2Min': 'CO2 must be 0 or more',
+
+  // "What's new" popup (shown once per version, see src/version.js)
+  'whatsNew.title': "What's new in FreeWay",
+  'whatsNew.version': 'Version',
+  'whatsNew.gotIt': 'Got it',
+  'whatsNew.change.language': 'Hebrew / English interface with right-to-left layout (Settings)',
+  'whatsNew.change.google': 'Sign in with Google in one click',
+  'whatsNew.change.photos': 'Real photos for every vehicle',
+  'whatsNew.change.icon': 'New AI Assistant icon in the menu',
 };
 
 export default en;
