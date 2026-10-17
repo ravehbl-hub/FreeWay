@@ -4,6 +4,7 @@ import { Cog, User } from 'lucide-react';
 import { formatPrice } from '../../utils/format.js';
 import { useLanguage } from '../../context/LanguageContext.jsx';
 import VehicleImage from '../ui/VehicleImage.jsx';
+import { PICKUP_LOCATIONS } from '../../utils/pickupLocations.js';
 
 export default function VehicleCard({ vehicle, reason, showName = true, location = '' }) {
   const { t } = useLanguage();
@@ -27,6 +28,17 @@ export default function VehicleCard({ vehicle, reason, showName = true, location
       {vehicle.available === false && <span className="unavailable-tag">{t('common.unavailable')}</span>}
       {location && vehicle.booked && <span className="unavailable-tag">{t('vehicles.bookedAt').replace('{location}', location)}</span>}
       {location && vehicle.booked === false && vehicle.available !== false && <span className="free-tag">{t('vehicles.freeAt').replace('{location}', location)}</span>}
+      {vehicle.available !== false && vehicle.free_locations && (
+        <div className="branches">
+          <span className="free-tag">
+            {t('vehicles.availableIn').replace('{n}', vehicle.free_locations.length).replace('{total}', PICKUP_LOCATIONS.length)}
+          </span>
+          <p className="branches-list">
+            {vehicle.free_locations.slice(0, 4).join(' · ')}
+            {vehicle.free_locations.length > 4 ? ' · +' + (vehicle.free_locations.length - 4) : ''}
+          </p>
+        </div>
+      )}
     </Link>
   );
 }

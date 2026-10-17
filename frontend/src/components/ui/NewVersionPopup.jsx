@@ -1,7 +1,7 @@
 // NewVersionPopup: two jobs.
 // 1. After a deploy: show "What's new" once (the last BUILD_ID the user saw is in localStorage).
 // 2. While the app is open: every minute fetch /build.json; if the server has a newer build,
-//    offer a "Reload" button so the user gets the new version without closing the tab.
+//    ask the user: "Reload now" or "Later" (Later hides the question for that build).
 import { useEffect, useState } from 'react';
 import { Sparkles, X } from 'lucide-react';
 import { APP_VERSION, BUILD_ID, BUILD_MESSAGE, BUILD_DATE, CHANGES } from '../../version.js';
@@ -31,6 +31,7 @@ export default function NewVersionPopup() {
   const { t, lang } = useLanguage();
   const [open, setOpen] = useState(readSeenVersion() !== BUILD_ID);
   const [newer, setNewer] = useState(null); // build info of a newer deploy, if found
+  const [dismissedId, setDismissedId] = useState(''); // build the user chose "Later" for
 
   // Ask the server every minute whether a newer build was deployed
   useEffect(() => {
@@ -39,21 +40,26 @@ export default function NewVersionPopup() {
         const response = await fetch('/build.json?t=' + Date.now(), { cache: 'no-store' });
         if (!response.ok) return;
         const info = await response.json();
-        if (info.id && info.id !== BUILD_ID) setNewer(info);
+        if (info.id && info.id !== BUILD_ID && info.id !== dismissedId) setNewer(info);
       } catch {
         // Offline or blocked - try again next minute
       }
     }
     const timer = setInterval(check, CHECK_EVERY_MS);
     return () => clearInterval(timer);
-  }, []);
+  }, [dismissedId]);
 
   function close() {
     saveSeenVersion();
     setOpen(false);
   }
 
-  // A newer deploy exists: offer to reload (the reload shows the regular "What's new" popup)
+  function later() {
+    setDismissedId(newer.id);
+    setNewer(null);
+  }
+
+  // A newer deploy exists: ask the user to reload now or later
   if (newer) {
     return (
       <div className="popup-backdrop">
@@ -64,9 +70,14 @@ export default function NewVersionPopup() {
           <h2>{t('whatsNew.updateTitle')}</h2>
           <p className="popup-version">{t('whatsNew.updateText')}</p>
           {newer.message ? <p className="popup-message">{newer.message}</p> : null}
-          <button type="button" className="button button-green button-block" onClick={() => window.location.reload()}>
-            {t('whatsNew.reload')}
-          </button>
+          <div className="popup-actions">
+            <button type="button" className="button button-light" onClick={later}>
+              {t('whatsNew.later')}
+            </button>
+            <button type="button" className="button button-green" onClick={() => window.location.reload()}>
+              {t('whatsNew.reload')}
+            </button>
+          </div>
         </div>
       </div>
     );

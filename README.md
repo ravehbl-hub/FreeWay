@@ -11,6 +11,9 @@ own booking history. Admins manage vehicles, all bookings and users.
 
 - **Auth**: register / login with JWT, passwords hashed with bcrypt, roles `user` and `admin`.
 - **What's new popup**: shown once after every deploy (build id, commit message and date are injected by Vite; change list lives in `frontend/src/version.js`).
+- **Pickup locations on a real map** (Leaflet + OpenStreetMap): the dashboard lists all 11 branches; a popup shows them on the map.
+- **Branch availability on every vehicle card**: "Available in n/11 branches" + the branch names.
+- **User menu** (top bar): Profile, Payment method, Log out. The payment method page shows the demo card and the bookings waiting for payment.
 - **Inventory per location**: every pickup location has one car of each model. A model can be booked once per location for overlapping dates (409 otherwise); cancelling a booking frees the car again. The catalog can be filtered by location + dates, and the booking form shows which locations are free.
 - **Payment page** (`/pay/:id`): demo checkout with a test card (4242 4242 4242 4242); the server validates the card and stores only its last 4 digits.
 - **Sign in with Google**: one-click login with a Google account (Google Identity Services in the browser, token verified on the server).

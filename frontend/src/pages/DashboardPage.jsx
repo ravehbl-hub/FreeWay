@@ -14,7 +14,6 @@ import StatCard from '../components/dashboard/StatCard.jsx';
 import AiAssistantPanel from '../components/dashboard/AiAssistantPanel.jsx';
 import PickupMapCard from '../components/dashboard/PickupMapCard.jsx';
 import BookingSummaryCard from '../components/dashboard/BookingSummaryCard.jsx';
-import PaymentCard from '../components/dashboard/PaymentCard.jsx';
 import RecommendedVehicles from '../components/dashboard/RecommendedVehicles.jsx';
 import PromoCard from '../components/dashboard/PromoCard.jsx';
 import Loader from '../components/ui/Loader.jsx';
@@ -95,7 +94,6 @@ export default function DashboardPage() {
       <div className="dashboard-middle">
         <PickupMapCard location={nextBooking ? nextBooking.pickup_location : ''} />
         <BookingSummaryCard booking={nextBooking} />
-        <PaymentCard booking={nextBooking} bookings={data.bookings} />
       </div>
 
       <div className="dashboard-bottom">

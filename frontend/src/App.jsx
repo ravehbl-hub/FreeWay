@@ -10,6 +10,7 @@ import VehiclesPage from './pages/VehiclesPage.jsx';
 import VehicleDetailsPage from './pages/VehicleDetailsPage.jsx';
 import MyBookingsPage from './pages/MyBookingsPage.jsx';
 import PaymentPage from './pages/PaymentPage.jsx';
+import PaymentMethodPage from './pages/PaymentMethodPage.jsx';
 import AssistantPage from './pages/AssistantPage.jsx';
 import ProfilePage from './pages/ProfilePage.jsx';
 import AdminPage from './pages/AdminPage.jsx';
@@ -30,6 +31,7 @@ export default function App() {
           <Route path="/vehicles/:id" element={<VehicleDetailsPage />} />
           <Route path="/bookings" element={<MyBookingsPage />} />
           <Route path="/pay/:id" element={<PaymentPage />} />
+          <Route path="/payment-method" element={<PaymentMethodPage />} />
           <Route path="/assistant" element={<AssistantPage />} />
           <Route path="/profile" element={<ProfilePage />} />
 

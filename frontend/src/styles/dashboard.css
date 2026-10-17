@@ -197,7 +197,7 @@
 /* Middle row */
 .dashboard-middle {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1.3fr 1fr;
   gap: 24px;
 }
 
@@ -413,4 +413,28 @@
   .vehicle-row {
     grid-template-columns: 1fr;
   }
+}
+
+/* Pickup locations: chips on the dashboard card */
+.location-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 12px 0 14px;
+}
+
+.location-chip {
+  border: 1px solid var(--border);
+  background: #fff;
+  border-radius: 999px;
+  padding: 5px 11px;
+  font-size: 12px;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.location-chip.selected {
+  background: var(--green);
+  border-color: var(--green);
+  color: #fff;
 }

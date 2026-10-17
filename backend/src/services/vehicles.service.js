@@ -37,29 +37,34 @@ export async function listVehicles(filters) {
     conditions.push('(name ILIKE $' + params.length + ' OR description ILIKE $' + params.length + ')');
   }
 
-  // Inventory: one car of each model per location. When a location is given we also return
-  // "booked" = true if that car is taken at that location for the dates (default: today).
-  let bookedColumn = 'FALSE AS booked';
-  if (filters.location) {
-    const start = filters.start_date || todayISO();
-    const end = filters.end_date || start;
-    params.push(filters.location, start, end);
-    const l = params.length;
-    bookedColumn = `EXISTS (
-      SELECT 1 FROM bookings b
-      WHERE b.vehicle_id = vehicles.id AND b.pickup_location = $${l - 2} AND b.status <> 'cancelled'
+  // Inventory: one car of each model per location. For the requested dates (default: today)
+  // we return the locations where this model is already taken ("busy_locations").
+  const start = filters.start_date || todayISO();
+  const end = filters.end_date || start;
+  params.push(start, end);
+  const l = params.length;
+  const busyColumn = `ARRAY(
+      SELECT DISTINCT b.pickup_location FROM bookings b
+      WHERE b.vehicle_id = vehicles.id AND b.status <> 'cancelled'
         AND b.start_date <= $${l} AND b.end_date >= $${l - 1}
-    ) AS booked`;
-  }
+    ) AS busy_locations`;
 
-  let sql = 'SELECT vehicles.*, ' + bookedColumn + ' FROM vehicles';
+  let sql = 'SELECT vehicles.*, ' + busyColumn + ' FROM vehicles';
   if (conditions.length > 0) {
     sql += ' WHERE ' + conditions.join(' AND ');
   }
   sql += ' ORDER BY price_per_day ASC';
 
   const result = await query(sql, params);
-  return result.rows;
+  // Add the list of free branches, and "booked" for the selected location (if any)
+  return result.rows.map((vehicle) => {
+    const free = PICKUP_LOCATIONS.filter((location) => !vehicle.busy_locations.includes(location));
+    return {
+      ...vehicle,
+      free_locations: free,
+      booked: filters.location ? vehicle.busy_locations.includes(filters.location) : false,
+    };
+  });
 }
 
 // For one vehicle: which locations still have their car free for the given dates
