@@ -1,6 +1,7 @@
 // BookingForm: dates, pickup time, location and insurance. Shows a live price calculation.
 // Used to create a booking (vehicle page) and to edit one (My bookings).
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { fetchVehicleAvailability } from '../../api/vehicles.api.js';
 import { PICKUP_LOCATIONS } from '../../utils/pickupLocations.js';
 import { daysBetween, formatPrice, todayISO } from '../../utils/format.js';
 import { serverErrorsToFields, validateBooking } from '../../utils/validation.js';
@@ -18,6 +19,30 @@ export default function BookingForm({ vehicle, initialValues, submitLabel, onSub
   const [errors, setErrors] = useState({});
   const [serverError, setServerError] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [availability, setAvailability] = useState([]); // [{ location, free }] for the chosen dates
+
+  // Every location has one car of this model: when both dates are chosen, ask the server
+  // which locations are still free so the user can pick one that works.
+  useEffect(() => {
+    const datesOk = values.start_date && values.end_date && values.end_date > values.start_date;
+    if (!datesOk) {
+      setAvailability([]);
+      return;
+    }
+    let cancelled = false;
+    fetchVehicleAvailability(vehicle.id, values.start_date, values.end_date)
+      .then((data) => {
+        if (!cancelled) setAvailability(data.locations);
+      })
+      .catch(() => {
+        if (!cancelled) setAvailability([]);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [vehicle.id, values.start_date, values.end_date]);
+
+  const busyLocations = availability.filter((item) => !item.free).map((item) => item.location);
 
   function handleChange(event) {
     const { name, value, type, checked } = event.target;
@@ -63,13 +88,23 @@ export default function BookingForm({ vehicle, initialValues, submitLabel, onSub
         <FormField label={t('booking.pickupLocation')} error={errors.pickup_location}>
           <select name="pickup_location" value={values.pickup_location} onChange={handleChange}>
             {PICKUP_LOCATIONS.map((location) => (
-              <option key={location} value={location}>
-                {location}
+              <option key={location} value={location} disabled={busyLocations.includes(location)}>
+                {location}{busyLocations.includes(location) ? ' - ' + t('booking.booked') : ''}
               </option>
             ))}
           </select>
         </FormField>
       </div>
+      {availability.length > 0 && (
+        <div className="availability-list">
+          <span className="muted">{t('booking.availabilityTitle')}</span>
+          {availability.map((item) => (
+            <span key={item.location} className={item.free ? 'availability-chip free' : 'availability-chip busy'}>
+              {item.location}
+            </span>
+          ))}
+        </div>
+      )}
       <label className="checkbox">
         <input type="checkbox" name="insurance" checked={values.insurance} onChange={handleChange} />
         {t('booking.insurance').replace('{price}', INSURANCE_PER_DAY)}

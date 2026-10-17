@@ -1,5 +1,8 @@
-// VehicleFilters: search box + category / transmission / seats / max price filters
+// VehicleFilters: search box + category / transmission / seats / max price filters,
+// plus pickup location and dates (to see which cars are free there - one car per location)
 import { useLanguage } from '../../context/LanguageContext.jsx';
+import { PICKUP_LOCATIONS } from '../../utils/pickupLocations.js';
+import { todayISO } from '../../utils/format.js';
 
 export default function VehicleFilters({ filters, onChange, onReset }) {
   const { t } = useLanguage();
@@ -33,6 +36,16 @@ export default function VehicleFilters({ filters, onChange, onReset }) {
         <option value="80">{t('vehicles.upTo').replace('{n}', 80)}</option>
         <option value="120">{t('vehicles.upTo').replace('{n}', 120)}</option>
       </select>
+      <select name="location" value={filters.location} onChange={handleChange} aria-label={t('vehicles.locationLabel')}>
+        <option value="">{t('vehicles.anyLocation')}</option>
+        {PICKUP_LOCATIONS.map((location) => (
+          <option key={location} value={location}>
+            {location}
+          </option>
+        ))}
+      </select>
+      <input name="start_date" type="date" min={todayISO()} value={filters.start_date} onChange={handleChange} aria-label={t('booking.pickupDate')} disabled={!filters.location} />
+      <input name="end_date" type="date" min={filters.start_date || todayISO()} value={filters.end_date} onChange={handleChange} aria-label={t('booking.returnDate')} disabled={!filters.location} />
       <button type="button" className="button button-light" onClick={onReset}>
         {t('common.reset')}
       </button>

@@ -5,7 +5,7 @@ import { formatPrice } from '../../utils/format.js';
 import { useLanguage } from '../../context/LanguageContext.jsx';
 import VehicleImage from '../ui/VehicleImage.jsx';
 
-export default function VehicleCard({ vehicle, reason, showName = true }) {
+export default function VehicleCard({ vehicle, reason, showName = true, location = '' }) {
   const { t } = useLanguage();
   return (
     <Link to={'/vehicles/' + vehicle.id} className="vehicle-card">
@@ -25,6 +25,8 @@ export default function VehicleCard({ vehicle, reason, showName = true }) {
       </p>
       {reason && <p className="vehicle-reason">✦ {reason}</p>}
       {vehicle.available === false && <span className="unavailable-tag">{t('common.unavailable')}</span>}
+      {location && vehicle.booked && <span className="unavailable-tag">{t('vehicles.bookedAt').replace('{location}', location)}</span>}
+      {location && vehicle.booked === false && vehicle.available !== false && <span className="free-tag">{t('vehicles.freeAt').replace('{location}', location)}</span>}
     </Link>
   );
 }

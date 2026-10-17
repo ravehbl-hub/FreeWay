@@ -32,11 +32,25 @@ router.get(
     query('minSeats').optional().isInt({ min: 1 }).toInt(),
     query('available').optional().isBoolean().toBoolean(),
     query('search').optional().isString().trim(),
+    query('location').optional().isString().trim(),
+    query('start_date').optional().isISO8601().withMessage('start_date must be YYYY-MM-DD'),
+    query('end_date').optional().isISO8601().withMessage('end_date must be YYYY-MM-DD'),
   ],
   validate,
   vehiclesController.list
 );
 router.get('/:id', [param('id').isInt().toInt()], validate, vehiclesController.getOne);
+// Which pickup locations still have this model free for the dates (one car per location)
+router.get(
+  '/:id/availability',
+  [
+    param('id').isInt().toInt(),
+    query('start_date').isISO8601().withMessage('start_date is required (YYYY-MM-DD)'),
+    query('end_date').isISO8601().withMessage('end_date is required (YYYY-MM-DD)'),
+  ],
+  validate,
+  vehiclesController.availability
+);
 
 router.post('/', requireAuth, requireRole('admin'), vehicleRules(false), validate, vehiclesController.create);
 router.put('/:id', requireAuth, requireRole('admin'), [param('id').isInt().toInt(), ...vehicleRules(true)], validate, vehiclesController.update);

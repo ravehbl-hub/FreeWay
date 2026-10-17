@@ -289,6 +289,13 @@ const he = {
   'validation.co2Min': 'ערך ה-CO2 חייב להיות 0 או יותר',
 
   // חלון "מה חדש" (מוצג פעם אחת לכל גרסה, ראו src/version.js)
+  'vehicles.locationLabel': 'נקודת איסוף',
+  'vehicles.anyLocation': 'כל המיקומים',
+  'vehicles.inventoryNote': 'בכל נקודת איסוף יש רכב אחד מכל דגם.',
+  'vehicles.bookedAt': 'תפוס ב{location}',
+  'vehicles.freeAt': 'פנוי ב{location}',
+  'booking.availabilityTitle': 'זמינות לתאריכים שבחרת:',
+  'booking.booked': 'תפוס',
   'whatsNew.title': 'מה חדש ב-FreeWay',
   'whatsNew.version': 'גרסה',
   'whatsNew.deployed': 'עלה לאוויר ב-',

@@ -18,6 +18,11 @@ export function fetchVehicle(id) {
   return apiRequest('/vehicles/' + id);
 }
 
+// Which pickup locations still have this model free for the dates (one car per location)
+export function fetchVehicleAvailability(id, startDate, endDate) {
+  return apiRequest('/vehicles/' + id + '/availability?start_date=' + startDate + '&end_date=' + endDate);
+}
+
 export function createVehicle(data) {
   return apiRequest('/vehicles', 'POST', data);
 }

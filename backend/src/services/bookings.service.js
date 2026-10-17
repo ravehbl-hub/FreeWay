@@ -1,5 +1,6 @@
 // Bookings service: price calculation, date-overlap check, ownership rules and SQL.
 import { query } from '../config/db.js';
+import { PICKUP_LOCATIONS } from '../config/pickupLocations.js';
 import { badRequest, conflict, forbidden, notFound } from '../utils/AppError.js';
 import { rentalDays, todayISO } from '../utils/dates.js';
 import { getVehicle } from './vehicles.service.js';
@@ -34,17 +35,25 @@ function checkDates(startDate, endDate) {
   }
 }
 
-// Throws 409 if the vehicle already has an active booking that overlaps these dates
-async function checkOverlap(vehicleId, startDate, endDate, ignoreBookingId) {
+// Inventory rule: each location has one car of every model. So the same model can be booked
+// at the same location only when the dates do not overlap. Cancelled bookings do not count,
+// which is how a cancelled booking returns the car to the inventory.
+async function checkOverlap(vehicleId, location, startDate, endDate, ignoreBookingId) {
   const result = await query(
     `SELECT id FROM bookings
-     WHERE vehicle_id = $1 AND status <> 'cancelled'
-       AND start_date < $3 AND end_date > $2
-       AND id <> $4`,
-    [vehicleId, startDate, endDate, ignoreBookingId || 0]
+     WHERE vehicle_id = $1 AND pickup_location = $2 AND status <> 'cancelled'
+       AND start_date < $4 AND end_date > $3
+       AND id <> $5`,
+    [vehicleId, location, startDate, endDate, ignoreBookingId || 0]
   );
   if (result.rows.length > 0) {
-    throw conflict('This vehicle is already booked for the selected dates');
+    throw conflict('This model is already booked at ' + location + ' for the selected dates. Try another location or other dates.');
+  }
+}
+
+function checkLocation(location) {
+  if (!PICKUP_LOCATIONS.includes(location)) {
+    throw badRequest('Unknown pickup location');
   }
 }
 
@@ -81,7 +90,8 @@ export async function createBooking(userId, data) {
   if (!vehicle.available) {
     throw badRequest('This vehicle is currently not available');
   }
-  await checkOverlap(vehicle.id, data.start_date, data.end_date);
+  checkLocation(data.pickup_location);
+  await checkOverlap(vehicle.id, data.pickup_location, data.start_date, data.end_date);
 
   const total = calculatePrice(vehicle.price_per_day, data.start_date, data.end_date, data.insurance);
   const result = await query(
@@ -99,7 +109,8 @@ export async function updateBooking(id, user, data) {
   }
   checkDates(data.start_date, data.end_date);
   const vehicle = await getVehicle(data.vehicle_id);
-  await checkOverlap(vehicle.id, data.start_date, data.end_date, id);
+  checkLocation(data.pickup_location);
+  await checkOverlap(vehicle.id, data.pickup_location, data.start_date, data.end_date, id);
 
   const total = calculatePrice(vehicle.price_per_day, data.start_date, data.end_date, data.insurance);
   await query(

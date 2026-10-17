@@ -289,6 +289,13 @@ const en = {
   'validation.co2Min': 'CO2 must be 0 or more',
 
   // "What's new" popup (shown once per version, see src/version.js)
+  'vehicles.locationLabel': 'Pickup location',
+  'vehicles.anyLocation': 'Any location',
+  'vehicles.inventoryNote': 'Every location has one car of each model.',
+  'vehicles.bookedAt': 'Booked at {location}',
+  'vehicles.freeAt': 'Free at {location}',
+  'booking.availabilityTitle': 'Availability for your dates:',
+  'booking.booked': 'booked',
   'whatsNew.title': "What's new in FreeWay",
   'whatsNew.version': 'Version',
   'whatsNew.deployed': 'deployed on',

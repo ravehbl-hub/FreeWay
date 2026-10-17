@@ -19,6 +19,15 @@ export async function getOne(req, res, next) {
   }
 }
 
+export async function availability(req, res, next) {
+  try {
+    const locations = await vehiclesService.getAvailability(req.params.id, req.query.start_date, req.query.end_date);
+    res.json({ locations: locations });
+  } catch (err) {
+    next(err);
+  }
+}
+
 export async function create(req, res, next) {
   try {
     const vehicle = await vehiclesService.createVehicle(req.body);

@@ -11,6 +11,7 @@ own booking history. Admins manage vehicles, all bookings and users.
 
 - **Auth**: register / login with JWT, passwords hashed with bcrypt, roles `user` and `admin`.
 - **What's new popup**: shown once after every deploy (build id, commit message and date are injected by Vite; change list lives in `frontend/src/version.js`).
+- **Inventory per location**: every pickup location has one car of each model. A model can be booked once per location for overlapping dates (409 otherwise); cancelling a booking frees the car again. The catalog can be filtered by location + dates, and the booking form shows which locations are free.
 - **Payment page** (`/pay/:id`): demo checkout with a test card (4242 4242 4242 4242); the server validates the card and stores only its last 4 digits.
 - **Sign in with Google**: one-click login with a Google account (Google Identity Services in the browser, token verified on the server).
 - **Vehicles**: catalog with filters (category, transmission, seats, price, search), details page. Admin CRUD.
@@ -161,6 +162,7 @@ The server does not print logs to the console (course requirement). Check that i
 | PATCH | `/api/users/:id/role` | admin | Change role |
 | DELETE | `/api/users/:id` | admin | Delete user |
 | GET | `/api/vehicles` | public | List + filters (`category, transmission, minSeats, maxPrice, available, search`) |
+| GET | `/api/vehicles/:id/availability?start_date&end_date` | public | Which locations still have this model free |
 | GET | `/api/vehicles/:id` | public | Vehicle details |
 | POST / PUT / DELETE | `/api/vehicles[/:id]` | admin | Vehicle CRUD |
 | GET | `/api/bookings` | user | My bookings |
