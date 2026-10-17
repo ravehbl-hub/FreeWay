@@ -1,8 +1,9 @@
-// NewVersionPopup: shows "What's new" once after every new app version.
-// The last version the user saw is kept in localStorage under 'freeway_seen_version'.
+// NewVersionPopup: shows "What's new" once after every deploy.
+// The last BUILD_ID the user saw is kept in localStorage under 'freeway_seen_version'.
 import { useState } from 'react';
 import { Sparkles, X } from 'lucide-react';
-import { APP_VERSION, CHANGES } from '../../version.js';
+import { APP_VERSION, BUILD_ID, BUILD_MESSAGE, BUILD_DATE, CHANGES } from '../../version.js';
+import { longDate } from '../../utils/format.js';
 import { useLanguage } from '../../context/LanguageContext.jsx';
 
 const STORAGE_KEY = 'freeway_seen_version';
@@ -17,15 +18,15 @@ function readSeenVersion() {
 
 function saveSeenVersion() {
   try {
-    localStorage.setItem(STORAGE_KEY, APP_VERSION);
+    localStorage.setItem(STORAGE_KEY, BUILD_ID);
   } catch {
     // Browser storage is blocked - the popup will simply show again next time
   }
 }
 
 export default function NewVersionPopup() {
-  const { t } = useLanguage();
-  const [open, setOpen] = useState(readSeenVersion() !== APP_VERSION);
+  const { t, lang } = useLanguage();
+  const [open, setOpen] = useState(readSeenVersion() !== BUILD_ID);
 
   if (!open) return null;
 
@@ -44,7 +45,10 @@ export default function NewVersionPopup() {
           <Sparkles size={22} />
         </div>
         <h2>{t('whatsNew.title')}</h2>
-        <p className="popup-version">{t('whatsNew.version')} {APP_VERSION}</p>
+        <p className="popup-version">
+          {t('whatsNew.version')} {APP_VERSION} · {t('whatsNew.deployed')} {longDate(BUILD_DATE.slice(0, 10), lang)}
+        </p>
+        {BUILD_MESSAGE ? <p className="popup-message">{BUILD_MESSAGE}</p> : null}
         <ul className="popup-list">
           {CHANGES.map((key) => (
             <li key={key}>{t(key)}</li>

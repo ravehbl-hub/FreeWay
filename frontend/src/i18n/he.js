@@ -291,6 +291,8 @@ const he = {
   // חלון "מה חדש" (מוצג פעם אחת לכל גרסה, ראו src/version.js)
   'whatsNew.title': 'מה חדש ב-FreeWay',
   'whatsNew.version': 'גרסה',
+  'whatsNew.deployed': 'עלה לאוויר ב-',
+  'whatsNew.change.aiBooking': 'עוזר ה-AI יכול עכשיו להזמין ולבטל עבורכם',
   'whatsNew.gotIt': 'הבנתי',
   'whatsNew.change.language': 'ממשק בעברית / אנגלית עם פריסה מימין לשמאל (בהגדרות)',
   'whatsNew.change.google': 'התחברות עם Google בלחיצה אחת',

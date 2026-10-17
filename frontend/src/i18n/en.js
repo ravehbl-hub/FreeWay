@@ -291,6 +291,8 @@ const en = {
   // "What's new" popup (shown once per version, see src/version.js)
   'whatsNew.title': "What's new in FreeWay",
   'whatsNew.version': 'Version',
+  'whatsNew.deployed': 'deployed on',
+  'whatsNew.change.aiBooking': 'The AI assistant can now book and cancel for you',
   'whatsNew.gotIt': 'Got it',
   'whatsNew.change.language': 'Hebrew / English interface with right-to-left layout (Settings)',
   'whatsNew.change.google': 'Sign in with Google in one click',
