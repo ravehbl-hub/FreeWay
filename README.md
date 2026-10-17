@@ -210,7 +210,7 @@ Errors always look like `{ "error": { "message": "...", "details": [{ "field", "
 
 ## Credits
 
-Vehicle photos in the seed data are served from [Unsplash](https://unsplash.com) (free license). The dashboard hero car is a local SVG.
+Vehicle photos (one real photo per model) and the dashboard hero photo are served from [Wikimedia Commons](https://commons.wikimedia.org) under free licenses, via `Special:FilePath` with a `width` parameter. The local SVGs remain as fallbacks.
 
 ## Screenshots
 

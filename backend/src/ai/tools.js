@@ -17,7 +17,7 @@ export const TOOL_DECLARATIONS = [
         vehicle_id: { type: 'integer', description: 'The id of the vehicle from the VEHICLE CATALOG' },
         start_date: { type: 'string', description: 'Pickup date in YYYY-MM-DD format' },
         end_date: { type: 'string', description: 'Return date in YYYY-MM-DD format (after the pickup date)' },
-        pickup_location: { type: 'string', description: 'One of: Tel Aviv - Downtown, Ben Gurion Airport, Jerusalem - Center, Haifa - Port, Eilat - Hotel Area. Default: Tel Aviv - Downtown' },
+        pickup_location: { type: 'string', description: 'One of: Tel Aviv - Downtown, Ben Gurion Airport, Jerusalem - Center, Haifa - Port, Eilat - Hotel Area, Lod, Holon, Hadera, Haifa, Beer Sheva, Ashdod. Default: Tel Aviv - Downtown' },
         pickup_time: { type: 'string', description: 'Pickup time HH:MM, default 10:00' },
         insurance: { type: 'boolean', description: 'true if the customer wants full insurance (12 EUR per day)' },
       },

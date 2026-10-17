@@ -18,6 +18,20 @@ function getClient() {
   return client;
 }
 
+// Gemini sometimes answers 429 (quota) or 503 (overloaded) for a moment.
+// This helper runs the request again once after a short pause before giving up.
+async function withRetry(request) {
+  try {
+    return await request();
+  } catch (err) {
+    if (err.status === 429 || err.status === 503) {
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      return request();
+    }
+    throw err;
+  }
+}
+
 // Turns any Gemini / network error into an AppError with a fitting status code
 function toAppError(err, timedOut) {
   if (err instanceof AppError) {
@@ -31,6 +45,9 @@ function toAppError(err, timedOut) {
   }
   if (err.status === 400 || err.status === 401 || err.status === 403) {
     return new AppError(502, 'The AI service rejected the request (check the API key / model name).');
+  }
+  if (err.status === 503) {
+    return new AppError(503, 'The AI service is overloaded right now. Please try again in a few seconds.');
   }
   return new AppError(502, 'The AI service is unavailable right now. Please try again later.');
 }
@@ -46,7 +63,7 @@ export async function generateText(systemPrompt, messages) {
   }, env.aiTimeoutMs);
 
   try {
-    const response = await ai.models.generateContent({
+    const response = await withRetry(() => ai.models.generateContent({
       model: env.geminiModel,
       contents: messages,
       config: {
@@ -55,7 +72,7 @@ export async function generateText(systemPrompt, messages) {
         maxOutputTokens: 800,
         abortSignal: controller.signal,
       },
-    });
+    }));
     return response.text || '';
   } catch (err) {
     throw toAppError(err, timedOut);
@@ -75,7 +92,7 @@ export async function generateJson(systemPrompt, userText, schema) {
   }, env.aiTimeoutMs);
 
   try {
-    const response = await ai.models.generateContent({
+    const response = await withRetry(() => ai.models.generateContent({
       model: env.geminiModel,
       contents: [{ role: 'user', parts: [{ text: userText }] }],
       config: {
@@ -85,7 +102,7 @@ export async function generateJson(systemPrompt, userText, schema) {
         responseJsonSchema: schema,
         abortSignal: controller.signal,
       },
-    });
+    }));
     return JSON.parse(response.text);
   } catch (err) {
     if (err instanceof SyntaxError) {
@@ -108,7 +125,7 @@ export async function streamText(systemPrompt, messages, onChunk) {
   }, env.aiTimeoutMs);
 
   try {
-    const stream = await ai.models.generateContentStream({
+    const stream = await withRetry(() => ai.models.generateContentStream({
       model: env.geminiModel,
       contents: messages,
       config: {
@@ -117,7 +134,7 @@ export async function streamText(systemPrompt, messages, onChunk) {
         maxOutputTokens: 800,
         abortSignal: controller.signal,
       },
-    });
+    }));
     let fullText = '';
     for await (const chunk of stream) {
       const text = chunk.text || '';
@@ -153,7 +170,7 @@ export async function streamWithTools(systemPrompt, messages, toolDeclarations, 
 
   try {
     for (let round = 0; round <= MAX_TOOL_ROUNDS; round++) {
-      const stream = await ai.models.generateContentStream({
+      const stream = await withRetry(() => ai.models.generateContentStream({
         model: env.geminiModel,
         contents: contents,
         config: {
@@ -163,7 +180,7 @@ export async function streamWithTools(systemPrompt, messages, toolDeclarations, 
           tools: [{ functionDeclarations: toolDeclarations }],
           abortSignal: controller.signal,
         },
-      });
+      }));
 
       // Collect the model's parts exactly as they arrive. Text parts are streamed to the user,
       // functionCall parts are tool requests. (The parts are sent back as-is in the next round,

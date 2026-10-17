@@ -1,5 +1,7 @@
-// HeroSection: big headline, availability chip and the hero car picture
+// HeroSection: big headline, availability chip and the hero car photo (Wikimedia Commons)
 import { useLanguage } from '../../context/LanguageContext.jsx';
+
+const HERO_PHOTO = 'https://commons.wikimedia.org/wiki/Special:FilePath/Volvo%20EX30%20Auto%20Zuerich%202023%201X7A0949.jpg?width=1200';
 
 export default function HeroSection({ availability }) {
   const { t } = useLanguage();
@@ -16,7 +18,7 @@ export default function HeroSection({ availability }) {
         <span className={isAvailable ? 'dot dot-green' : 'dot dot-grey'} />
         {isAvailable ? t('dashboard.available') : t('dashboard.noneAvailable')}
       </span>
-      <img className="hero-car" src="/cars/hero.svg" alt={t('dashboard.heroAlt')} />
+      <img className="hero-car" src={HERO_PHOTO} alt={t('dashboard.heroAlt')} />
     </section>
   );
 }

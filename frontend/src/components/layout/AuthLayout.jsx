@@ -11,7 +11,7 @@ export default function AuthLayout({ title, subtitle, children }) {
           Free<span>Way</span>
         </p>
         <h1>{t('auth.tagline')}</h1>
-        <img src="/cars/hero.svg" alt={t('auth.heroAlt')} />
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Volvo%20EX30%20Auto%20Zuerich%202023%201X7A0949.jpg?width=1200" alt={t('auth.heroAlt')} />
       </div>
       <div className="card auth-card">
         <div className="auth-card-top">

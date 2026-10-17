@@ -49,11 +49,14 @@
 
 .hero-car {
   position: absolute;
-  inset-inline-end: -10px;
-  bottom: -10px;
-  width: 72%;
-  max-width: 640px;
-  filter: drop-shadow(0 24px 22px rgba(0, 0, 0, 0.12));
+  inset-inline-end: 0;
+  bottom: 0;
+  width: 58%;
+  max-width: 560px;
+  height: 88%;
+  object-fit: cover;          /* real photo: fill a rounded box instead of a cutout */
+  border-radius: 20px;
+  box-shadow: 0 24px 40px rgba(0, 0, 0, 0.16);
 }
 
 /* Stat tiles */
@@ -403,6 +406,7 @@
   .hero-car {
     position: static;
     width: 100%;
+    height: 200px;
     margin-top: 12px;
   }
 

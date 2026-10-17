@@ -5,4 +5,10 @@ export const PICKUP_LOCATIONS = [
   'Jerusalem - Center',
   'Haifa - Port',
   'Eilat - Hotel Area',
+  'Lod',
+  'Holon',
+  'Hadera',
+  'Haifa',
+  'Beer Sheva',
+  'Ashdod',
 ];
