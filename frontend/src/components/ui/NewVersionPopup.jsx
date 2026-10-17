@@ -1,12 +1,15 @@
-// NewVersionPopup: shows "What's new" once after every deploy.
-// The last BUILD_ID the user saw is kept in localStorage under 'freeway_seen_version'.
-import { useState } from 'react';
+// NewVersionPopup: two jobs.
+// 1. After a deploy: show "What's new" once (the last BUILD_ID the user saw is in localStorage).
+// 2. While the app is open: every minute fetch /build.json; if the server has a newer build,
+//    offer a "Reload" button so the user gets the new version without closing the tab.
+import { useEffect, useState } from 'react';
 import { Sparkles, X } from 'lucide-react';
 import { APP_VERSION, BUILD_ID, BUILD_MESSAGE, BUILD_DATE, CHANGES } from '../../version.js';
-import { longDate } from '../../utils/format.js';
 import { useLanguage } from '../../context/LanguageContext.jsx';
+import { longDate } from '../../utils/format.js';
 
 const STORAGE_KEY = 'freeway_seen_version';
+const CHECK_EVERY_MS = 60 * 1000;
 
 function readSeenVersion() {
   try {
@@ -27,13 +30,49 @@ function saveSeenVersion() {
 export default function NewVersionPopup() {
   const { t, lang } = useLanguage();
   const [open, setOpen] = useState(readSeenVersion() !== BUILD_ID);
+  const [newer, setNewer] = useState(null); // build info of a newer deploy, if found
 
-  if (!open) return null;
+  // Ask the server every minute whether a newer build was deployed
+  useEffect(() => {
+    async function check() {
+      try {
+        const response = await fetch('/build.json?t=' + Date.now(), { cache: 'no-store' });
+        if (!response.ok) return;
+        const info = await response.json();
+        if (info.id && info.id !== BUILD_ID) setNewer(info);
+      } catch {
+        // Offline or blocked - try again next minute
+      }
+    }
+    const timer = setInterval(check, CHECK_EVERY_MS);
+    return () => clearInterval(timer);
+  }, []);
 
   function close() {
     saveSeenVersion();
     setOpen(false);
   }
+
+  // A newer deploy exists: offer to reload (the reload shows the regular "What's new" popup)
+  if (newer) {
+    return (
+      <div className="popup-backdrop">
+        <div className="popup-card" role="dialog" aria-modal="true">
+          <div className="popup-icon">
+            <Sparkles size={22} />
+          </div>
+          <h2>{t('whatsNew.updateTitle')}</h2>
+          <p className="popup-version">{t('whatsNew.updateText')}</p>
+          {newer.message ? <p className="popup-message">{newer.message}</p> : null}
+          <button type="button" className="button button-green button-block" onClick={() => window.location.reload()}>
+            {t('whatsNew.reload')}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!open) return null;
 
   return (
     <div className="popup-backdrop" onClick={close}>

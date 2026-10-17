@@ -15,4 +15,5 @@ export const CHANGES = [
   'whatsNew.change.photos',
   'whatsNew.change.icon',
   'whatsNew.change.aiBooking',
+  'whatsNew.change.payment',
 ];
