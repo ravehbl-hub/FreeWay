@@ -1,4 +1,4 @@
-// HeroSection: big headline, availability chip and the hero car cutout (PNG with transparent background, from a Wikimedia Commons photo)
+// HeroSection: big headline, availability chip and a stylized silver car (PNG cutout, re-toned to match the UI)
 import { useLanguage } from '../../context/LanguageContext.jsx';
 
 const HERO_PHOTO = '/cars/hero.png';
