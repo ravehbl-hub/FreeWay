@@ -1,0 +1,12 @@
+{
+  "name": "freeway",
+  "private": true,
+  "description": "FreeWay monorepo helper: lets Railway build and run the backend from the repository root",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "npm --prefix backend install",
+    "start": "npm --prefix backend run db:migrate && npm --prefix backend start"
+  }
+}
