@@ -1,0 +1,144 @@
+/* layout.css - app shell: sidebar, topbar, page area */
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+  gap: 24px;
+  padding: 24px;
+}
+
+.sidebar {
+  position: sticky;
+  top: 24px;
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 20px 12px;
+  background: var(--card-soft);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.sidebar-link {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  color: var(--text);
+  transition: background 0.15s;
+}
+
+.sidebar-link:hover {
+  background: #ffffff;
+}
+
+.sidebar-link.active {
+  background: #ffffff;
+  box-shadow: var(--shadow);
+  color: var(--green);
+}
+
+.app-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.brand {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.5px;
+}
+
+.brand span {
+  color: var(--green);
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.topbar-hello {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.round-button {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  background: var(--card-soft);
+  box-shadow: var(--shadow);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.round-button:hover {
+  background: #ffffff;
+}
+
+.page {
+  max-width: 1280px;
+}
+
+.page-title {
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+}
+
+.page-subtitle {
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+/* Mobile: the sidebar becomes a bottom navigation bar */
+@media (max-width: 760px) {
+  .app-shell {
+    padding: 16px 16px 96px;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: auto;
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    z-index: 10;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 8px;
+    gap: 4px;
+    background: #ffffff;
+  }
+
+  .sidebar-link {
+    width: 44px;
+    height: 44px;
+  }
+
+  .sidebar-settings {
+    display: none;
+  }
+
+  .topbar-hello {
+    display: none;
+  }
+
+  .page-title {
+    font-size: 28px;
+  }
+}

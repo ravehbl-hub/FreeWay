@@ -1,0 +1,415 @@
+/* dashboard.css - the main dashboard grid (follows the reference design) */
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.dashboard-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 24px;
+}
+
+.dashboard-hero-area {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+/* Hero */
+.hero {
+  position: relative;
+  min-height: 380px;
+  padding-top: 16px;
+}
+
+.hero-title {
+  font-size: 52px;
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  line-height: 1.05;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-subtitle {
+  font-size: 28px;
+  color: #3c4146;
+  margin: 10px 0 26px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero .chip {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-car {
+  position: absolute;
+  right: -10px;
+  bottom: -10px;
+  width: 72%;
+  max-width: 640px;
+  filter: drop-shadow(0 24px 22px rgba(0, 0, 0, 0.12));
+}
+
+/* Stat tiles */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.stats-row-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.stat-card {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  background: var(--card-soft);
+}
+
+.stat-icon {
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.stat-value small {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.stat-label {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 4px 0 0;
+}
+
+/* AI panel */
+.ai-panel {
+  background: var(--card-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ai-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ai-panel-header h2 {
+  font-size: 20px;
+}
+
+.sparkle {
+  background: #ffffff;
+  cursor: default;
+}
+
+.quick-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.quick-action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 18px 8px;
+  border: none;
+  border-radius: 16px;
+  background: #ffffff;
+  cursor: pointer;
+  text-align: center;
+  font-size: 14px;
+  transition: box-shadow 0.15s;
+}
+
+.quick-action:hover {
+  box-shadow: var(--shadow);
+}
+
+.quick-action svg {
+  margin-bottom: 8px;
+}
+
+.quick-action strong {
+  font-weight: 500;
+}
+
+.quick-action span {
+  color: var(--muted);
+}
+
+.ai-input {
+  width: 100%;
+  resize: none;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #ffffff;
+}
+
+.ai-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.ai-toolbar .button {
+  margin-left: auto;
+}
+
+.tool-button {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.tool-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Middle row */
+.dashboard-middle {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.map {
+  position: relative;
+  height: 210px;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.map > svg {
+  width: 100%;
+  height: 100%;
+}
+
+.map-pin {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.pin-halo {
+  position: absolute;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: rgba(30, 142, 90, 0.18);
+}
+
+.map-pin svg {
+  position: relative;
+}
+
+.booking-card .date-range {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  padding: 18px 0 22px;
+  border-bottom: 1px solid var(--border);
+}
+
+.date-range div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.date-range strong {
+  font-size: 44px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.date-range span {
+  font-size: 15px;
+  margin-top: 6px;
+}
+
+.booking-card-footer {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-top: 18px;
+}
+
+.booking-card-footer p {
+  margin: 0;
+  font-size: 13px;
+}
+
+.booking-card-footer .status-badge {
+  margin-left: auto;
+}
+
+.booking-empty-button {
+  margin-top: 24px;
+}
+
+.payment-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.bank-card {
+  margin: 12px 0 18px;
+  padding: 22px 20px 18px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #3a3f44, #23272b);
+  color: #ffffff;
+}
+
+.bank-card-number {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.bank-card-nfc {
+  margin-left: auto;
+}
+
+.bank-card-expiry {
+  display: block;
+  margin-top: 18px;
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.secure-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* Bottom row */
+.dashboard-bottom {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr);
+  gap: 24px;
+}
+
+.vehicle-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.ai-summary {
+  font-size: 14px;
+}
+
+.promo-card {
+  position: relative;
+  min-height: 320px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  color: #ffffff;
+}
+
+.promo-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.promo-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 28px;
+  gap: 10px;
+}
+
+.promo-content h2 {
+  font-size: 28px;
+  font-weight: 500;
+}
+
+.promo-content .button {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+/* Tablet */
+@media (max-width: 1100px) {
+  .dashboard-top {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-middle {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .dashboard-bottom {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Mobile */
+@media (max-width: 760px) {
+  .hero {
+    min-height: 0;
+  }
+
+  .hero-title {
+    font-size: 36px;
+  }
+
+  .hero-subtitle {
+    font-size: 20px;
+  }
+
+  .hero-car {
+    position: static;
+    width: 100%;
+    margin-top: 12px;
+  }
+
+  .stats-row,
+  .stats-row-4,
+  .dashboard-middle,
+  .vehicle-row {
+    grid-template-columns: 1fr;
+  }
+}

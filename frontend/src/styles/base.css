@@ -1,0 +1,91 @@
+/* base.css - design tokens (colors, radius, shadow), reset and typography */
+:root {
+  --bg: #f2f3f5;
+  --card: #ffffff;
+  --card-soft: #f6f7f8;
+  --text: #16191d;
+  --muted: #6b7178;
+  --border: #e3e5e8;
+  --green: #1e8e5a;
+  --green-dark: #187449;
+  --green-soft: #e3f3ea;
+  --dark: #2b2f33;
+  --danger: #c93b3b;
+  --danger-soft: #fbeaea;
+  --warning: #b7791f;
+  --radius: 20px;
+  --radius-small: 14px;
+  --shadow: 0 6px 24px rgba(20, 25, 30, 0.06);
+  --font: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0 0 4px;
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+p {
+  margin: 0 0 8px;
+}
+
+a {
+  color: var(--green);
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.small {
+  font-size: 13px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
