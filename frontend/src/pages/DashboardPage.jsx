@@ -5,7 +5,7 @@ import { Car, Leaf, ShieldCheck } from 'lucide-react';
 import { useFetch } from '../hooks/useFetch.js';
 import { useLanguage } from '../context/LanguageContext.jsx';
 import { fetchMyStats } from '../api/stats.api.js';
-import { fetchMyBookings, payBooking } from '../api/bookings.api.js';
+import { fetchMyBookings } from '../api/bookings.api.js';
 import { fetchVehicles } from '../api/vehicles.api.js';
 import { fetchRecommendations, generateRecommendations } from '../api/ai.api.js';
 import { todayISO } from '../utils/format.js';
@@ -73,11 +73,6 @@ export default function DashboardPage() {
     setGenerating(false);
   }
 
-  async function handlePay(bookingId) {
-    await payBooking(bookingId);
-    reload();
-  }
-
   if (loading && !data) return <Loader text="loading.dashboard" />;
   if (error) return <ErrorMessage message={error} onRetry={reload} />;
 
@@ -100,7 +95,7 @@ export default function DashboardPage() {
       <div className="dashboard-middle">
         <PickupMapCard location={nextBooking ? nextBooking.pickup_location : ''} />
         <BookingSummaryCard booking={nextBooking} />
-        <PaymentCard booking={nextBooking} onPay={handlePay} />
+        <PaymentCard booking={nextBooking} bookings={data.bookings} />
       </div>
 
       <div className="dashboard-bottom">

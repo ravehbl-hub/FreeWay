@@ -2,7 +2,7 @@
 import { Link } from 'react-router-dom';
 import { useFetch } from '../hooks/useFetch.js';
 import { useLanguage } from '../context/LanguageContext.jsx';
-import { cancelBooking, fetchMyBookings, payBooking, updateBooking } from '../api/bookings.api.js';
+import { cancelBooking, fetchMyBookings, updateBooking } from '../api/bookings.api.js';
 import { todayISO } from '../utils/format.js';
 import BookingRow from '../components/bookings/BookingRow.jsx';
 import Loader from '../components/ui/Loader.jsx';
@@ -12,11 +12,6 @@ import EmptyState from '../components/ui/EmptyState.jsx';
 export default function MyBookingsPage() {
   const { t } = useLanguage();
   const { data, loading, error, reload } = useFetch(fetchMyBookings);
-
-  async function handlePay(id) {
-    await payBooking(id);
-    reload();
-  }
 
   async function handleCancel(id) {
     await cancelBooking(id);
@@ -37,7 +32,7 @@ export default function MyBookingsPage() {
 
   function renderList(list) {
     return list.map((booking) => (
-      <BookingRow key={booking.id} booking={booking} onPay={handlePay} onCancel={handleCancel} onUpdate={handleUpdate} />
+      <BookingRow key={booking.id} booking={booking} onCancel={handleCancel} onUpdate={handleUpdate} />
     ));
   }
 

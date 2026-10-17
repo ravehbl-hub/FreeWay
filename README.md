@@ -11,6 +11,7 @@ own booking history. Admins manage vehicles, all bookings and users.
 
 - **Auth**: register / login with JWT, passwords hashed with bcrypt, roles `user` and `admin`.
 - **What's new popup**: shown once after every deploy (build id, commit message and date are injected by Vite; change list lives in `frontend/src/version.js`).
+- **Payment page** (`/pay/:id`): demo checkout with a test card (4242 4242 4242 4242); the server validates the card and stores only its last 4 digits.
 - **Sign in with Google**: one-click login with a Google account (Google Identity Services in the browser, token verified on the server).
 - **Vehicles**: catalog with filters (category, transmission, seats, price, search), details page. Admin CRUD.
 - **Bookings**: create with live price calculation, date-overlap check, edit / cancel / pay (demo). Admin sees and manages all.
@@ -168,7 +169,7 @@ The server does not print logs to the console (course requirement). Check that i
 | POST | `/api/bookings` | user | Create booking |
 | PUT | `/api/bookings/:id` | owner | Edit pending booking |
 | PATCH | `/api/bookings/:id/cancel` | owner/admin | Cancel |
-| PATCH | `/api/bookings/:id/pay` | owner | Demo payment -> confirmed |
+| PATCH | `/api/bookings/:id/pay` (body: card_name, card_number, expiry, cvc) | owner | Demo payment -> confirmed |
 | PATCH | `/api/bookings/:id/status` | admin | Set status |
 | DELETE | `/api/bookings/:id` | admin | Delete booking |
 | GET | `/api/stats/me` | user | Dashboard tiles |

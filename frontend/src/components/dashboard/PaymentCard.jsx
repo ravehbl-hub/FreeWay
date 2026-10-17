@@ -1,25 +1,18 @@
-// PaymentCard: dark bank card + "Pay now" button (demo payment that confirms a pending booking)
-import { useState } from 'react';
+// PaymentCard: dark bank card on the dashboard. Shows the last card used (demo) and
+// a "Pay now" link to the payment page when the next booking is still pending.
+import { Link } from 'react-router-dom';
 import { Lock, Nfc } from 'lucide-react';
 import { formatPrice } from '../../utils/format.js';
 import { useLanguage } from '../../context/LanguageContext.jsx';
 
-export default function PaymentCard({ booking, onPay }) {
-  const { t } = useLanguage();
-  const [paying, setPaying] = useState(false);
-  const [error, setError] = useState('');
-  const canPay = booking && booking.status === 'pending';
+const DEMO_LAST4 = '4242';
 
-  async function handlePay() {
-    setPaying(true);
-    setError('');
-    try {
-      await onPay(booking.id);
-    } catch (err) {
-      setError(err.message);
-    }
-    setPaying(false);
-  }
+export default function PaymentCard({ booking, bookings = [] }) {
+  const { t } = useLanguage();
+  const canPay = booking && booking.status === 'pending';
+  // Last 4 digits of the most recent paid booking, or the demo card
+  const paid = bookings.find((b) => b.card_last4);
+  const last4 = paid ? paid.card_last4 : DEMO_LAST4;
 
   return (
     <section className="card payment-card">
@@ -30,15 +23,20 @@ export default function PaymentCard({ booking, onPay }) {
           <span>••••</span>
           <span>••••</span>
           <span>••••</span>
-          <span>2468</span>
+          <span>{last4}</span>
           <Nfc size={22} className="bank-card-nfc" />
         </div>
         <span className="bank-card-expiry">{t('payment.expires')}</span>
       </div>
-      <button type="button" className="button button-green button-block" disabled={!canPay || paying} onClick={handlePay}>
-        {paying ? t('payment.processing') : canPay ? t('payment.payNow') + ' · ' + formatPrice(booking.total_price) : t('payment.nothing')}
-      </button>
-      {error && <p className="field-message">{error}</p>}
+      {canPay ? (
+        <Link to={'/pay/' + booking.id} className="button button-green button-block">
+          {t('payment.payNow')} · {formatPrice(booking.total_price)}
+        </Link>
+      ) : (
+        <button type="button" className="button button-green button-block" disabled>
+          {t('payment.nothing')}
+        </button>
+      )}
       <p className="secure-note">
         <Lock size={14} /> {t('payment.secure')}
       </p>

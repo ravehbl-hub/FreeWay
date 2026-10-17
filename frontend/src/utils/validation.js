@@ -60,6 +60,25 @@ export function validateBooking(values, today) {
   return errors;
 }
 
+// Demo card form (payment page). Returns translation keys, like the other validators.
+export function validatePayment(values) {
+  const errors = {};
+  const digits = values.card_number.replace(/\s+/g, '');
+  if (values.card_name.trim().length < 2) {
+    errors.card_name = 'validation.cardName';
+  }
+  if (!/^\d{13,19}$/.test(digits)) {
+    errors.card_number = 'validation.cardNumber';
+  }
+  if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(values.expiry.trim())) {
+    errors.expiry = 'validation.cardExpiry';
+  }
+  if (!/^\d{3,4}$/.test(values.cvc.trim())) {
+    errors.cvc = 'validation.cardCvc';
+  }
+  return errors;
+}
+
 export function validateVehicle(values) {
   const errors = {};
   if (values.name.trim().length < 2) {

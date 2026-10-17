@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS bookings (
   status          VARCHAR(12)   NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'confirmed', 'cancelled')),
   total_price     NUMERIC(10,2) NOT NULL,
   insurance       BOOLEAN       NOT NULL DEFAULT FALSE,
+  card_last4      VARCHAR(4),                     -- last 4 digits of the (demo) card used to pay
   created_at      TIMESTAMPTZ   NOT NULL DEFAULT NOW(),
   CHECK (end_date > start_date)
 );
@@ -78,3 +79,4 @@ CREATE INDEX IF NOT EXISTS idx_ai_recommendations_user ON ai_recommendations(use
 -- Upgrades for databases created before Google sign-in was added
 ALTER TABLE users ALTER COLUMN password_hash DROP NOT NULL;
 ALTER TABLE users ADD COLUMN IF NOT EXISTS google_id VARCHAR(64) UNIQUE;
+ALTER TABLE bookings ADD COLUMN IF NOT EXISTS card_last4 VARCHAR(4);

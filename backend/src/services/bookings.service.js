@@ -121,12 +121,21 @@ export async function cancelBooking(id, user) {
 }
 
 // Demo payment: no real card is charged, the booking simply becomes 'confirmed'
-export async function payBooking(id, user) {
+// Demo payment: no real charge happens. We check the card is not expired, keep only the
+// last 4 digits (never the full number or CVC) and mark the booking as confirmed.
+export async function payBooking(id, user, card) {
   const booking = await getOwnedBooking(id, user);
   if (booking.status !== 'pending') {
     throw badRequest('Only pending bookings can be paid');
   }
-  await query("UPDATE bookings SET status = 'confirmed' WHERE id = $1", [id]);
+  const [month, year] = card.expiry.split('/').map(Number);
+  const now = new Date();
+  const expired = year + 2000 < now.getFullYear() || (year + 2000 === now.getFullYear() && month < now.getMonth() + 1);
+  if (expired) {
+    throw badRequest('The card has expired');
+  }
+  const last4 = card.card_number.slice(-4);
+  await query("UPDATE bookings SET status = 'confirmed', card_last4 = $2 WHERE id = $1", [id, last4]);
   return getOwnedBooking(id, user);
 }
 

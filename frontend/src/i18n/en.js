@@ -298,6 +298,28 @@ const en = {
   'whatsNew.change.google': 'Sign in with Google in one click',
   'whatsNew.change.photos': 'Real photos for every vehicle',
   'whatsNew.change.icon': 'New AI Assistant icon in the menu',
+
+  // Payment page (demo card)
+  'loading.booking': 'Loading booking...',
+  'pay.title': 'Payment',
+  'pay.subtitle': 'Demo checkout - no real charge is made.',
+  'pay.total': 'Total to pay',
+  'pay.cardDetails': 'Card details',
+  'pay.useDemoCard': 'Use demo card',
+  'pay.cardName': 'Name on card',
+  'pay.cardNumber': 'Card number',
+  'pay.expiry': 'Expiry (MM/YY)',
+  'pay.cvc': 'CVC',
+  'pay.payButton': 'Pay',
+  'pay.demoNote': 'Demo payment: only the last 4 digits of the card are saved.',
+  'pay.successTitle': 'Payment successful!',
+  'pay.successText': 'Your booking is confirmed. See you at the pickup point.',
+  'pay.goToBookings': 'Go to my bookings',
+  'pay.cancelledTitle': 'This booking was cancelled',
+  'validation.cardName': 'Enter the name on the card',
+  'validation.cardNumber': 'Card number must be 13-19 digits',
+  'validation.cardExpiry': 'Expiry must be MM/YY',
+  'validation.cardCvc': 'CVC must be 3-4 digits',
 };
 
 export default en;

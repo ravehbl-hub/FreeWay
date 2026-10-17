@@ -25,7 +25,14 @@ router.get('/:id', [idRule], validate, bookingsController.getOne);
 router.post('/', bookingRules, validate, bookingsController.create);
 router.put('/:id', [idRule, ...bookingRules], validate, bookingsController.update);
 router.patch('/:id/cancel', [idRule], validate, bookingsController.cancel);
-router.patch('/:id/pay', [idRule], validate, bookingsController.pay);
+// Demo payment: the card is validated here but NEVER stored - only its last 4 digits are kept
+const paymentRules = [
+  body('card_name').trim().isLength({ min: 2, max: 60 }).withMessage('Name on card is required'),
+  body('card_number').customSanitizer((v) => String(v || '').replace(/\s+/g, '')).matches(/^\d{13,19}$/).withMessage('Card number must be 13-19 digits'),
+  body('expiry').trim().matches(/^(0[1-9]|1[0-2])\/\d{2}$/).withMessage('Expiry must be MM/YY'),
+  body('cvc').trim().matches(/^\d{3,4}$/).withMessage('CVC must be 3-4 digits'),
+];
+router.patch('/:id/pay', [idRule, ...paymentRules], validate, bookingsController.pay);
 router.patch(
   '/:id/status',
   requireRole('admin'),

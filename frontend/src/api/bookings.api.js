@@ -21,8 +21,13 @@ export function cancelBooking(id) {
   return apiRequest('/bookings/' + id + '/cancel', 'PATCH');
 }
 
-export function payBooking(id) {
-  return apiRequest('/bookings/' + id + '/pay', 'PATCH');
+export function fetchBooking(id) {
+  return apiRequest('/bookings/' + id);
+}
+
+// Demo payment: sends the card details, the server keeps only the last 4 digits
+export function payBooking(id, card) {
+  return apiRequest('/bookings/' + id + '/pay', 'PATCH', card);
 }
 
 export function setBookingStatus(id, status) {

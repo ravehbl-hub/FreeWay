@@ -298,6 +298,28 @@ const he = {
   'whatsNew.change.google': 'התחברות עם Google בלחיצה אחת',
   'whatsNew.change.photos': 'תמונות אמיתיות לכל רכב',
   'whatsNew.change.icon': 'אייקון חדש לעוזר ה-AI בתפריט',
+
+  // עמוד תשלום (כרטיס הדגמה)
+  'loading.booking': 'טוען הזמנה...',
+  'pay.title': 'תשלום',
+  'pay.subtitle': 'תשלום להדגמה בלבד – לא מתבצע חיוב אמיתי.',
+  'pay.total': 'סה"כ לתשלום',
+  'pay.cardDetails': 'פרטי כרטיס',
+  'pay.useDemoCard': 'השתמש בכרטיס הדגמה',
+  'pay.cardName': 'שם בעל הכרטיס',
+  'pay.cardNumber': 'מספר כרטיס',
+  'pay.expiry': 'תוקף (MM/YY)',
+  'pay.cvc': 'CVC',
+  'pay.payButton': 'שלם',
+  'pay.demoNote': 'תשלום הדגמה: נשמרות רק 4 הספרות האחרונות של הכרטיס.',
+  'pay.successTitle': 'התשלום בוצע בהצלחה!',
+  'pay.successText': 'ההזמנה שלך מאושרת. נתראה בנקודת האיסוף.',
+  'pay.goToBookings': 'להזמנות שלי',
+  'pay.cancelledTitle': 'ההזמנה הזו בוטלה',
+  'validation.cardName': 'יש להזין את השם שעל הכרטיס',
+  'validation.cardNumber': 'מספר הכרטיס חייב להכיל 13–19 ספרות',
+  'validation.cardExpiry': 'התוקף חייב להיות בפורמט MM/YY',
+  'validation.cardCvc': 'CVC חייב להכיל 3–4 ספרות',
 };
 
 export default he;

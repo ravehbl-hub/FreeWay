@@ -57,7 +57,7 @@ export async function cancel(req, res, next) {
 
 export async function pay(req, res, next) {
   try {
-    const booking = await bookingsService.payBooking(req.params.id, req.user);
+    const booking = await bookingsService.payBooking(req.params.id, req.user, req.body);
     res.json({ booking: booking });
   } catch (err) {
     next(err);

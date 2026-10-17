@@ -1,12 +1,13 @@
 // BookingRow: one booking in the "My bookings" list with Pay / Edit / Cancel actions
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { formatPrice, longDate } from '../../utils/format.js';
 import StatusBadge from '../ui/StatusBadge.jsx';
 import VehicleImage from '../ui/VehicleImage.jsx';
 import BookingForm from './BookingForm.jsx';
 import { useLanguage } from '../../context/LanguageContext.jsx';
 
-export default function BookingRow({ booking, onPay, onCancel, onUpdate }) {
+export default function BookingRow({ booking, onCancel, onUpdate }) {
   const { t, lang } = useLanguage();
   const [editing, setEditing] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -52,9 +53,9 @@ export default function BookingRow({ booking, onPay, onCancel, onUpdate }) {
       {booking.status !== 'cancelled' && (
         <div className="booking-row-actions">
           {isPending && (
-            <button type="button" className="button button-green button-small" disabled={busy} onClick={() => runAction(onPay)}>
+            <Link to={'/pay/' + booking.id} className="button button-green button-small">
               {t('bookings.payNow')}
-            </button>
+            </Link>
           )}
           {isPending && (
             <button type="button" className="button button-light button-small" onClick={() => setEditing(!editing)}>
