@@ -1,7 +1,7 @@
-// HeroSection: big headline, availability chip and an imaginary brand-free car (SVG drawn in the UI palette)
+// HeroSection: big headline, availability chip and the hero car (PNG cutout of a generated concept car, no brand)
 import { useLanguage } from '../../context/LanguageContext.jsx';
 
-const HERO_PHOTO = '/cars/hero.svg';
+const HERO_PHOTO = '/cars/hero.png';
 
 export default function HeroSection({ availability }) {
   const { t } = useLanguage();

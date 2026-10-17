@@ -42,4 +42,4 @@ All car photos come from Wikimedia Commons (free licenses). Backgrounds were rem
 - hyundai-elantra.png - https://commons.wikimedia.org/wiki/File:2021%20Hyundai%20Elantra%20Limited%20in%20Quartz%20White%2C%20front%20right.jpg
 - nissan-gt-r.png - https://commons.wikimedia.org/wiki/File:Nissan%20GT-R%20R35%20FL3%20T-Spec%20Millennium%20Jade%2001.jpg
 - lamborghini-huracan-evo.png - https://commons.wikimedia.org/wiki/File:Lamborghini%20Hurac%C3%A1n%20Tecnica%201X7A7430.jpg
-- hero.svg - original illustration made for FreeWay (no source photo, no brand)
+- hero.png - AI-generated concept car supplied by the project owner (no brand); background removed
