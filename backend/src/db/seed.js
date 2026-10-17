@@ -9,17 +9,22 @@ const users = [
   { name: 'Dana Cohen', email: 'user@freeway.com', password: 'User123!', role: 'user' },
 ];
 
+// Car photos come from Unsplash (free to use). The helper builds a resized, cropped URL.
+function img(photoId) {
+  return 'https://images.unsplash.com/photo-' + photoId + '?w=900&h=560&fit=crop&q=80&auto=format';
+}
+
 const vehicles = [
-  ['Peugeot 208', 'compact', 5, 'auto', 'petrol', 45, '/cars/compact.svg', 0.105, 'Agile city car, easy to park, great fuel economy.'],
-  ['Toyota Yaris Hybrid', 'compact', 5, 'auto', 'hybrid', 49, '/cars/compact.svg', 0.085, 'Hybrid compact - ideal for city driving and low emissions.'],
-  ['Fiat 500e', 'compact', 4, 'auto', 'electric', 52, '/cars/compact.svg', 0.0, 'Fully electric city car with a 250 km range.'],
-  ['Volkswagen Polo', 'compact', 5, 'manual', 'petrol', 39, '/cars/compact.svg', 0.115, 'Budget friendly manual compact.'],
-  ['Hyundai Tucson', 'suv', 5, 'auto', 'hybrid', 65, '/cars/suv.svg', 0.125, 'Spacious family SUV with a large trunk.'],
-  ['Volvo EX30', 'suv', 5, 'auto', 'electric', 75, '/cars/suv.svg', 0.0, 'Compact electric SUV, premium interior, 470 km range.'],
-  ['Kia Sorento', 'suv', 7, 'auto', 'diesel', 82, '/cars/suv.svg', 0.165, '7 seats - perfect for big families and road trips.'],
-  ['Mercedes C-Class', 'premium', 5, 'auto', 'petrol', 85, '/cars/premium.svg', 0.150, 'Executive sedan for business trips.'],
-  ['BMW i4', 'premium', 5, 'auto', 'electric', 110, '/cars/premium.svg', 0.0, 'Electric gran coupe with sporty handling.'],
-  ['Audi A6', 'premium', 5, 'auto', 'diesel', 99, '/cars/premium.svg', 0.140, 'Comfortable long-distance premium sedan.'],
+  ['Peugeot 208', 'compact', 5, 'auto', 'petrol', 45, img('1605559424843-9e4c228bf1c2'), 0.105, 'Agile city car, easy to park, great fuel economy.'],
+  ['Toyota Yaris Hybrid', 'compact', 5, 'auto', 'hybrid', 49, img('1502877338535-766e1452684a'), 0.085, 'Hybrid compact - ideal for city driving and low emissions.'],
+  ['Fiat 500e', 'compact', 4, 'auto', 'electric', 52, img('1549317661-bd32c8ce0db2'), 0.0, 'Fully electric city car with a 250 km range.'],
+  ['Volkswagen Polo', 'compact', 5, 'manual', 'petrol', 39, img('1555215695-3004980ad54e'), 0.115, 'Budget friendly manual compact.'],
+  ['Hyundai Tucson', 'suv', 5, 'auto', 'hybrid', 65, img('1519641471654-76ce0107ad1b'), 0.125, 'Spacious family SUV with a large trunk.'],
+  ['Volvo EX30', 'suv', 5, 'auto', 'electric', 75, img('1609521263047-f8f205293f24'), 0.0, 'Compact electric SUV, premium interior, 470 km range.'],
+  ['Kia Sorento', 'suv', 7, 'auto', 'diesel', 82, img('1533473359331-0135ef1b58bf'), 0.165, '7 seats - perfect for big families and road trips.'],
+  ['Mercedes C-Class', 'premium', 5, 'auto', 'petrol', 85, img('1590362891991-f776e747a588'), 0.150, 'Executive sedan for business trips.'],
+  ['BMW i4', 'premium', 5, 'auto', 'electric', 110, img('1617531653332-bd46c24f2068'), 0.0, 'Electric gran coupe with sporty handling.'],
+  ['Audi A6', 'premium', 5, 'auto', 'diesel', 99, img('1606664515524-ed2f786a0bd6'), 0.140, 'Comfortable long-distance premium sedan.'],
 ];
 
 function isoDaysFromNow(days) {

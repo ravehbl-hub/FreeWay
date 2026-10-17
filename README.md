@@ -204,6 +204,10 @@ Errors always look like `{ "error": { "message": "...", "details": [{ "field", "
 4. Deploy. `frontend/vercel.json` rewrites all paths to `index.html` so React Router deep links work.
 5. Put the Vercel URL in Railway's `CORS_ORIGIN` and redeploy the backend.
 
+## Credits
+
+Vehicle photos in the seed data are served from [Unsplash](https://unsplash.com) (free license). The dashboard hero car is a local SVG.
+
 ## Screenshots
 
 The UI reference is in [`docs/ui-reference.jpg`](./docs/ui-reference.jpg). Add your screenshots to `docs/screenshots/`:
