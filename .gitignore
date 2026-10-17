@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+
+# Environment variables (secrets!) - only the .env.example files are committed
+.env
+.env.*
+!.env.example
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+*.log
+
+# Course material and original reference image (copy kept in docs/)
+instructions/
+1408b2cbc0872d7b76b79d054f0896f7.jpg
