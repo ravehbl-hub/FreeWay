@@ -339,9 +339,10 @@ td select {
 
 .vehicle-card-image {
   width: 100%;
-  height: 110px;
-  object-fit: contain;
-  margin-bottom: 6px;
+  height: 130px;
+  object-fit: cover;       /* photos fill the box and are cropped, not squashed */
+  border-radius: 12px;
+  margin-bottom: 10px;
 }
 
 .vehicle-card-name {
