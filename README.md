@@ -27,7 +27,7 @@ own booking history. Admins manage vehicles, all bookings and users.
 | Backend | Node.js + Express 5, express-validator, helmet, cors, express-rate-limit |
 | Database | PostgreSQL (`pg`, plain SQL in `schema.sql`) |
 | Auth | JWT (`jsonwebtoken`) + `bcrypt` |
-| AI | Google Gemini via `@google/genai` (default model `gemini-2.5-flash`) |
+| AI | Google Gemini via `@google/genai` (default model `gemini-3.8-flash`) |
 | Deploy | Frontend on Vercel, backend + PostgreSQL on Railway |
 
 ## Project structure
@@ -128,7 +128,7 @@ The server does not print logs to the console (course requirement). Check that i
 | `DB_SSL` | `true` when the DB needs SSL (Railway public URL) |
 | `JWT_SECRET`, `JWT_EXPIRES_IN` | JWT signing secret and lifetime |
 | `GEMINI_API_KEY` | Google Gemini key - **server only, never commit it** |
-| `GEMINI_MODEL` | Default `gemini-2.5-flash` |
+| `GEMINI_MODEL` | Default `gemini-3.8-flash` |
 | `AI_TIMEOUT_MS` | Gemini timeout, default 20000 |
 
 **frontend/.env**: `VITE_API_URL` - the backend URL ending with `/api`.
