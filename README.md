@@ -10,6 +10,7 @@ own booking history. Admins manage vehicles, all bookings and users.
 ## Features
 
 - **Auth**: register / login with JWT, passwords hashed with bcrypt, roles `user` and `admin`.
+- **Sign in with Google**: one-click login with a Google account (Google Identity Services in the browser, token verified on the server).
 - **Vehicles**: catalog with filters (category, transmission, seats, price, search), details page. Admin CRUD.
 - **Bookings**: create with live price calculation, date-overlap check, edit / cancel / pay (demo). Admin sees and manages all.
 - **Dashboard** (follows the UI reference): stat tiles (bookings this month, availability %, CO2 saved), AI panel with quick actions, pickup map card, next booking card, payment card, recommended vehicles, promo card.
@@ -130,8 +131,16 @@ The server does not print logs to the console (course requirement). Check that i
 | `GEMINI_API_KEY` | Google Gemini key - **server only, never commit it** |
 | `GEMINI_MODEL` | Default `gemini-3.8-flash` |
 | `AI_TIMEOUT_MS` | Gemini timeout, default 20000 |
+| `GOOGLE_CLIENT_ID` | Google OAuth client ID for Sign in with Google (optional) |
 
-**frontend/.env**: `VITE_API_URL` - the backend URL ending with `/api`.
+**frontend/.env**: `VITE_API_URL` - the backend URL ending with `/api`. `VITE_GOOGLE_CLIENT_ID` - same Google client ID as the backend (optional, hides the Google button when empty).
+
+### Sign in with Google setup
+
+1. Open [Google Cloud Console](https://console.cloud.google.com/apis/credentials), create a project and an **OAuth client ID** of type **Web application**.
+2. Under **Authorized JavaScript origins** add `http://localhost:5173` and your Vercel URL (for example `https://freeway.vercel.app`). No redirect URI is needed.
+3. Copy the client ID (ends with `.apps.googleusercontent.com`) into `GOOGLE_CLIENT_ID` (backend / Railway) and `VITE_GOOGLE_CLIENT_ID` (frontend / Vercel). Redeploy the frontend after changing it.
+4. Flow: the Google button gives the browser an ID token -> `POST /api/auth/google` -> the server verifies it with `google-auth-library` -> finds the user by `google_id`, links an existing account with the same email, or creates a new `user` -> returns our JWT. Accounts created this way have no password.
 
 ## API overview
 
@@ -140,6 +149,7 @@ The server does not print logs to the console (course requirement). Check that i
 | GET | `/api/health` | public | Server / DB / AI status |
 | POST | `/api/auth/register` | public | Create account (role user) |
 | POST | `/api/auth/login` | public | Login, returns JWT |
+| POST | `/api/auth/google` | public | Sign in with Google (ID token), returns JWT |
 | GET | `/api/auth/me` | user | Current user |
 | PATCH | `/api/users/me` | user | Update name / password |
 | GET | `/api/users` | admin | List users |

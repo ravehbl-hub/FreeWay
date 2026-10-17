@@ -5,7 +5,8 @@ CREATE TABLE IF NOT EXISTS users (
   id            SERIAL PRIMARY KEY,
   name          VARCHAR(100) NOT NULL,
   email         VARCHAR(255) NOT NULL UNIQUE,
-  password_hash VARCHAR(255) NOT NULL,
+  password_hash VARCHAR(255),              -- NULL for accounts created with Google sign-in
+  google_id     VARCHAR(64)  UNIQUE,       -- Google account id (only for Google sign-in)
   role          VARCHAR(10)  NOT NULL DEFAULT 'user' CHECK (role IN ('user', 'admin')),
   created_at    TIMESTAMPTZ  NOT NULL DEFAULT NOW()
 );
@@ -73,3 +74,7 @@ CREATE TABLE IF NOT EXISTS ai_recommendations (
 );
 
 CREATE INDEX IF NOT EXISTS idx_ai_recommendations_user ON ai_recommendations(user_id);
+
+-- Upgrades for databases created before Google sign-in was added
+ALTER TABLE users ALTER COLUMN password_hash DROP NOT NULL;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS google_id VARCHAR(64) UNIQUE;

@@ -13,5 +13,6 @@ export const env = {
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '7d',
   geminiApiKey: process.env.GEMINI_API_KEY || '',
   geminiModel: process.env.GEMINI_MODEL || 'gemini-3.8-flash',
+  googleClientId: process.env.GOOGLE_CLIENT_ID || '',
   aiTimeoutMs: Number(process.env.AI_TIMEOUT_MS) || 20000,
 };

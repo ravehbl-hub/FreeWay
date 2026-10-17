@@ -6,6 +6,7 @@ import { serverErrorsToFields, validateRegister } from '../utils/validation.js';
 import FormField from '../components/ui/FormField.jsx';
 import ErrorMessage from '../components/ui/ErrorMessage.jsx';
 import AuthLayout from '../components/layout/AuthLayout.jsx';
+import GoogleSignInButton from '../components/auth/GoogleSignInButton.jsx';
 
 export default function RegisterPage() {
   const { user, register } = useAuth();
@@ -52,6 +53,7 @@ export default function RegisterPage() {
           {submitting ? 'Creating account...' : 'Create account'}
         </button>
       </form>
+      <GoogleSignInButton onError={setServerError} />
       <p className="auth-switch">
         Already registered? <Link to="/login">Log in</Link>
       </p>

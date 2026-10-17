@@ -8,7 +8,7 @@ import { badRequest, conflict, notFound, unauthorized } from '../utils/AppError.
 const SALT_ROUNDS = 10;
 
 // Creates a signed JWT that holds the user's id, role, name and email
-function createToken(user) {
+export function createToken(user) {
   const payload = { userId: user.id, role: user.role, name: user.name, email: user.email };
   return jwt.sign(payload, env.jwtSecret, { expiresIn: env.jwtExpiresIn });
 }
@@ -38,6 +38,10 @@ export async function login(data) {
   // Same message for "no such user" and "wrong password", so emails can't be discovered
   if (!user) {
     throw unauthorized('Invalid email or password');
+  }
+  // Accounts created with Google have no password
+  if (!user.password_hash) {
+    throw unauthorized('This account uses Google sign-in. Please continue with Google.');
   }
   const passwordOk = await bcrypt.compare(data.password, user.password_hash);
   if (!passwordOk) {

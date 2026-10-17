@@ -1,10 +1,11 @@
-// /api/auth - register, login, current user
+// /api/auth - register, login, Google sign-in, current user
 import { Router } from 'express';
 import { body } from 'express-validator';
 import { validate } from '../middleware/validate.js';
 import { requireAuth } from '../middleware/auth.js';
 import { authLimiter } from '../middleware/rateLimit.js';
 import * as authController from '../controllers/auth.controller.js';
+import * as googleAuthController from '../controllers/googleAuth.controller.js';
 
 const router = Router();
 
@@ -32,6 +33,15 @@ router.post(
   ],
   validate,
   authController.login
+);
+
+// Google sign-in: the browser sends the ID token it got from Google
+router.post(
+  '/google',
+  authLimiter,
+  [body('credential').isString().notEmpty().withMessage('Google credential is required')],
+  validate,
+  googleAuthController.loginWithGoogle
 );
 
 router.get('/me', requireAuth, authController.me);

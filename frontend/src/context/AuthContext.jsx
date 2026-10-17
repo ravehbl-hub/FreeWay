@@ -1,7 +1,7 @@
 // AuthContext: keeps the logged-in user + token for the whole app (no prop drilling).
 // Any component can call useAuth() to get { user, login, register, logout, ... }.
 import { createContext, useContext, useEffect, useState } from 'react';
-import { fetchMe, loginUser, registerUser } from '../api/auth.api.js';
+import { fetchMe, loginUser, loginWithGoogleToken, registerUser } from '../api/auth.api.js';
 import { getToken, saveToken } from '../api/client.js';
 
 const AuthContext = createContext(null);
@@ -52,6 +52,13 @@ export function AuthProvider({ children }) {
     return data.user;
   }
 
+  async function loginWithGoogle(credential) {
+    const data = await loginWithGoogleToken(credential);
+    saveToken(data.token);
+    setUser(data.user);
+    return data.user;
+  }
+
   function logout() {
     saveToken(null);
     setUser(null);
@@ -63,6 +70,7 @@ export function AuthProvider({ children }) {
     isAdmin: user ? user.role === 'admin' : false,
     login: login,
     register: register,
+    loginWithGoogle: loginWithGoogle,
     logout: logout,
     setUser: setUser,
   };

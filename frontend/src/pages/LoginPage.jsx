@@ -6,6 +6,7 @@ import { validateLogin } from '../utils/validation.js';
 import FormField from '../components/ui/FormField.jsx';
 import ErrorMessage from '../components/ui/ErrorMessage.jsx';
 import AuthLayout from '../components/layout/AuthLayout.jsx';
+import GoogleSignInButton from '../components/auth/GoogleSignInButton.jsx';
 
 export default function LoginPage() {
   const { user, login } = useAuth();
@@ -51,6 +52,7 @@ export default function LoginPage() {
           {submitting ? 'Logging in...' : 'Log in'}
         </button>
       </form>
+      <GoogleSignInButton onError={setServerError} />
       <p className="auth-switch">
         No account yet? <Link to="/register">Create one</Link>
       </p>

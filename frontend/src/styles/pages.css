@@ -37,6 +37,30 @@
   text-align: center;
 }
 
+/* "or" line + Google button under the login / register forms */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0 14px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border, #e4e6ea);
+}
+
+.google-button {
+  display: flex;
+  justify-content: center;
+  min-height: 40px;
+}
+
 .auth-hint {
   margin-top: 8px;
   text-align: center;
