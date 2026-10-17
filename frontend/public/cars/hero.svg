@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 330">
+  <!-- FreeWay hero: an imaginary, brand-free electric crossover drawn in the grey UI palette -->
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#EEF0F2"/>
+      <stop offset="0.5" stop-color="#C9CED4"/>
+      <stop offset="1" stop-color="#9BA3AB"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5A646E"/>
+      <stop offset="1" stop-color="#222930"/>
+    </linearGradient>
+    <linearGradient id="lower" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3B434B"/>
+      <stop offset="1" stop-color="#1B2025"/>
+    </linearGradient>
+    <radialGradient id="rim" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#EDF0F2"/>
+      <stop offset="0.55" stop-color="#A6AEB5"/>
+      <stop offset="1" stop-color="#4E565E"/>
+    </radialGradient>
+  </defs>
+
+  <!-- ground shadow -->
+  <ellipse cx="362" cy="300" rx="318" ry="13" fill="#000" opacity="0.13"/>
+
+  <!-- body -->
+  <path d="M50 246 L48 214 Q48 196 70 190 L120 182 L208 170 L262 112 Q280 92 320 90 L478 86 Q516 86 540 110 L598 164 L660 176 Q686 182 688 206 L690 240 Q690 256 672 258 L66 258 Q50 258 50 246 Z" fill="url(#body)"/>
+
+  <!-- roof highlight -->
+  <path d="M270 112 Q286 98 320 96 L476 92 Q508 92 530 112 L540 122 L262 126 Z" fill="#fff" opacity="0.35"/>
+
+  <!-- dark lower sill / bumpers -->
+  <path d="M50 246 L690 240 L690 258 Q690 272 672 272 L68 272 Q50 272 50 258 Z" fill="url(#lower)"/>
+
+  <!-- glass: windshield, front window, rear window (brand-free, continuous greenhouse) -->
+  <path d="M230 172 L270 118 Q286 102 320 100 L390 98 L386 170 Z" fill="url(#glass)"/>
+  <path d="M400 98 L476 95 Q504 95 522 114 L548 146 L548 168 L398 170 Z" fill="url(#glass)"/>
+  <path d="M560 148 L540 118 Q560 124 574 142 L590 164 L560 166 Z" fill="url(#glass)"/>
+  <!-- window reflections -->
+  <path d="M246 166 L278 124 Q292 110 320 108 L352 106 L346 140 Z" fill="#fff" opacity="0.10"/>
+  <path d="M412 104 L470 102 L452 130 L410 132 Z" fill="#fff" opacity="0.08"/>
+
+  <!-- pillar + mirror + handles + seam -->
+  <path d="M386 170 L390 98 L400 98 L398 170 Z" fill="#C2C8CE"/>
+  <path d="M386 160 Q412 150 418 166 L414 176 L388 176 Z" fill="#B3BAC1"/>
+  <rect x="330" y="190" width="30" height="7" rx="3.5" fill="#8F979F"/>
+  <rect x="450" y="188" width="30" height="7" rx="3.5" fill="#8F979F"/>
+  <path d="M398 172 L402 254" stroke="#A9B0B7" stroke-width="2" fill="none"/>
+  <path d="M548 170 L556 254" stroke="#A9B0B7" stroke-width="2" fill="none"/>
+
+  <!-- headlight: slim LED bar, no emblem -->
+  <path d="M54 200 L150 190 L154 202 L56 212 Z" fill="#F6F8FA"/>
+  <path d="M58 203 L146 194" stroke="#fff" stroke-width="2.5" fill="none"/>
+  <!-- closed EV front: smooth panel with a soft line, no grille / no logo -->
+  <path d="M52 224 L150 220" stroke="#B2B9C0" stroke-width="2" fill="none"/>
+  <!-- green accent (UI color) on the bumper -->
+  <path d="M60 262 L140 260" stroke="#1E8E5A" stroke-width="4" stroke-linecap="round" fill="none"/>
+
+  <!-- rear light -->
+  <path d="M668 198 L686 200 L688 222 L668 222 Z" fill="#C8463C" opacity="0.9"/>
+
+  <!-- wheels: dark wells behind, tire, rim, spokes -->
+  <g>
+    <circle cx="185" cy="252" r="58" fill="#13171B"/>
+    <circle cx="185" cy="252" r="46" fill="#1F2429"/>
+    <circle cx="185" cy="252" r="31" fill="url(#rim)"/>
+    <g stroke="#626A72" stroke-width="7" stroke-linecap="round">
+      <path d="M185 227 L185 277"/><path d="M163 239 L207 265"/><path d="M163 265 L207 239"/>
+    </g>
+    <circle cx="185" cy="252" r="7" fill="#DEE2E6"/>
+  </g>
+  <g>
+    <circle cx="552" cy="252" r="58" fill="#13171B"/>
+    <circle cx="552" cy="252" r="46" fill="#1F2429"/>
+    <circle cx="552" cy="252" r="31" fill="url(#rim)"/>
+    <g stroke="#626A72" stroke-width="7" stroke-linecap="round">
+      <path d="M552 227 L552 277"/><path d="M530 239 L574 265"/><path d="M530 265 L574 239"/>
+    </g>
+    <circle cx="552" cy="252" r="7" fill="#DEE2E6"/>
+  </g>
+</svg>
