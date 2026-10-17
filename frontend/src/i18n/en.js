@@ -313,6 +313,7 @@ const en = {
   'chatActions.booked': 'Booked!',
   'chatActions.change': 'Change',
   'chatActions.defaultDates': 'default dates, change them in My bookings',
+  'chatActions.defaultLocation': 'default branch, change it in My bookings',
   'chatActions.pickDates': 'Pick other dates',
   'whatsNew.title': "What's new in FreeWay",
   'whatsNew.version': 'Version',

@@ -1,13 +1,13 @@
 // ChatVehicleActions: under an AI answer, one row per vehicle the answer mentions (/vehicles/<id>)
 // with "Details" (popup) and "Book" buttons. "Book" creates the booking right away, using the dates
-// written in the chat (or tomorrow + 3 days) and the default pickup location, then shows the result.
+// and the pickup location written in the chat (fallbacks: tomorrow + 3 days, first branch), then shows the result.
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CalendarCheck, CheckCircle2, Info } from 'lucide-react';
 import { fetchVehicle } from '../../api/vehicles.api.js';
 import { createBooking } from '../../api/bookings.api.js';
 import { formatPrice, longDate } from '../../utils/format.js';
-import { pickBookingDates } from '../../utils/chatDates.js';
+import { findLocation, pickBookingDates } from '../../utils/chatDates.js';
 import { PICKUP_LOCATIONS } from '../../utils/pickupLocations.js';
 import { useLanguage } from '../../context/LanguageContext.jsx';
 import VehicleImage from '../ui/VehicleImage.jsx';
@@ -44,7 +44,10 @@ export default function ChatVehicleActions({ text, contextText = '' }) {
 
   // One click = one booking. Dates come from the conversation when they were written there.
   async function quickBook(vehicle) {
-    const dates = pickBookingDates(contextText + ' ' + text);
+    const conversation = contextText + ' ' + text;
+    const dates = pickBookingDates(conversation);
+    // The user's own message wins over the assistant's text when both mention a branch
+    const location = findLocation(contextText) || findLocation(text) || PICKUP_LOCATIONS[0];
     setResults({ ...results, [vehicle.id]: { busy: true } });
     try {
       const data = await createBooking({
@@ -52,10 +55,10 @@ export default function ChatVehicleActions({ text, contextText = '' }) {
         start_date: dates.start_date,
         end_date: dates.end_date,
         pickup_time: '10:00',
-        pickup_location: PICKUP_LOCATIONS[0],
+        pickup_location: location,
         insurance: false,
       });
-      setResults({ ...results, [vehicle.id]: { booking: data.booking, fromChat: dates.fromChat } });
+      setResults({ ...results, [vehicle.id]: { booking: data.booking, fromChat: dates.fromChat, locationFromChat: location !== PICKUP_LOCATIONS[0] || Boolean(findLocation(conversation)) } });
     } catch (err) {
       setResults({ ...results, [vehicle.id]: { error: err.message } });
     }
@@ -98,6 +101,7 @@ export default function ChatVehicleActions({ text, contextText = '' }) {
                     {longDate(result.booking.start_date, lang)} → {longDate(result.booking.end_date, lang)} · {result.booking.pickup_location} ·{' '}
                     {formatPrice(result.booking.total_price)}
                     {!result.fromChat ? ' · ' + t('chatActions.defaultDates') : ''}
+                    {!result.locationFromChat ? ' · ' + t('chatActions.defaultLocation') : ''}
                   </p>
                   <div className="chat-vehicle-buttons">
                     <Link to={'/pay/' + result.booking.id} className="button button-green button-small">

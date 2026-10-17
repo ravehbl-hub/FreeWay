@@ -1,6 +1,8 @@
-// Finds rental dates written in a chat (user or assistant text) so "Book" can book right away.
-// Understands 20/10/2026, 20.10.2026 and 2026-10-20. Falls back to tomorrow + 3 days.
+// Finds rental dates and the pickup location written in a chat (user or assistant text),
+// so "Book" can book right away. Dates: 20/10/2026, 20.10.2026 or 2026-10-20 (fallback: tomorrow + 3 days).
+// Location: any branch name or alias (English / Hebrew); fallback: the first branch in the list.
 import { todayISO } from './format.js';
+import { PICKUP_PLACES } from './pickupLocations.js';
 
 function pad(n) {
   return String(n).padStart(2, '0');
@@ -34,4 +36,21 @@ export function pickBookingDates(text) {
   }
   const start = addDays(today, 1);
   return { start_date: start, end_date: addDays(start, 3), fromChat: false };
+}
+
+// Finds the pickup location mentioned in the text. If several are mentioned, the LAST one wins
+// (usually the one the user settled on). Longer aliases are checked first ("haifa port" before "haifa").
+export function findLocation(text) {
+  const lower = text.toLowerCase();
+  let best = null;
+  PICKUP_PLACES.forEach((place) => {
+    const words = [place.name.toLowerCase(), ...place.aliases].sort((a, b) => b.length - a.length);
+    words.forEach((word) => {
+      const index = lower.lastIndexOf(word);
+      if (index >= 0 && (!best || index > best.index || (index === best.index && word.length > best.length))) {
+        best = { name: place.name, index: index, length: word.length };
+      }
+    });
+  });
+  return best ? best.name : null;
 }

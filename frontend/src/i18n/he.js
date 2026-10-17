@@ -313,6 +313,7 @@ const he = {
   'chatActions.booked': 'הוזמן!',
   'chatActions.change': 'שינוי',
   'chatActions.defaultDates': 'תאריכי ברירת מחדל – אפשר לשנות בהזמנות שלי',
+  'chatActions.defaultLocation': 'סניף ברירת מחדל – אפשר לשנות בהזמנות שלי',
   'chatActions.pickDates': 'בחרו תאריכים אחרים',
   'whatsNew.title': 'מה חדש ב-FreeWay',
   'whatsNew.version': 'גרסה',
