@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Car, Leaf, ShieldCheck } from 'lucide-react';
 import { useFetch } from '../hooks/useFetch.js';
+import { useLanguage } from '../context/LanguageContext.jsx';
 import { fetchMyStats } from '../api/stats.api.js';
 import { fetchMyBookings, payBooking } from '../api/bookings.api.js';
 import { fetchVehicles } from '../api/vehicles.api.js';
@@ -55,6 +56,7 @@ function pickOnePerCategory(vehicles) {
 }
 
 export default function DashboardPage() {
+  const { t } = useLanguage();
   const { data, loading, error, reload, setData } = useFetch(loadDashboard);
   const [generating, setGenerating] = useState(false);
   const [aiError, setAiError] = useState('');
@@ -76,7 +78,7 @@ export default function DashboardPage() {
     reload();
   }
 
-  if (loading && !data) return <Loader text="Loading your dashboard..." />;
+  if (loading && !data) return <Loader text="loading.dashboard" />;
   if (error) return <ErrorMessage message={error} onRetry={reload} />;
 
   const nextBooking = findNextBooking(data.bookings);
@@ -87,9 +89,9 @@ export default function DashboardPage() {
         <div className="dashboard-hero-area">
           <HeroSection availability={data.stats.availability} />
           <div className="stats-row">
-            <StatCard icon={Car} value={data.stats.bookingsThisMonth} label="My bookings this month" />
-            <StatCard icon={ShieldCheck} value={data.stats.availability} unit="%" label="Vehicle availability" />
-            <StatCard icon={Leaf} value={data.stats.co2Saved} label="kg CO₂ saved this month" />
+            <StatCard icon={Car} value={data.stats.bookingsThisMonth} label={t('dashboard.statBookings')} />
+            <StatCard icon={ShieldCheck} value={data.stats.availability} unit="%" label={t('dashboard.statAvailability')} />
+            <StatCard icon={Leaf} value={data.stats.co2Saved} label={t('dashboard.statCo2')} />
           </div>
         </div>
         <AiAssistantPanel />

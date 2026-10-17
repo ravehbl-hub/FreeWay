@@ -1,17 +1,19 @@
 // PickupMapCard: shows the pickup location on a simple drawn map
 import { Link } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext.jsx';
 
 export default function PickupMapCard({ location }) {
+  const { t } = useLanguage();
   return (
     <section className="card map-card">
       <div className="card-header">
         <div>
-          <h2>Pickup location</h2>
-          <p className="muted">{location || 'Tel Aviv - Downtown'}</p>
+          <h2>{t('map.title')}</h2>
+          <p className="muted">{location || t('map.default')}</p>
         </div>
-        <Link to="/bookings" aria-label="See bookings" className="icon-link">
-          <ChevronRight size={20} />
+        <Link to="/bookings" aria-label={t('map.seeBookings')} className="icon-link">
+          <ChevronRight size={20} className="flip-rtl" />
         </Link>
       </div>
       <div className="map">

@@ -6,9 +6,11 @@ import { changeUserRole, deleteUser, fetchUsers } from '../../api/users.api.js';
 import { useAuth } from '../../context/AuthContext.jsx';
 import Loader from '../ui/Loader.jsx';
 import ErrorMessage from '../ui/ErrorMessage.jsx';
+import { useLanguage } from '../../context/LanguageContext.jsx';
 
 export default function AdminUsers() {
   const { user: currentUser } = useAuth();
+  const { t } = useLanguage();
   const { data, loading, error, reload } = useFetch(fetchUsers);
   const [actionError, setActionError] = useState('');
 
@@ -23,7 +25,7 @@ export default function AdminUsers() {
   }
 
   async function handleDelete(person) {
-    if (!window.confirm('Delete ' + person.name + ' and all their bookings?')) return;
+    if (!window.confirm(t('admin.deleteUser').replace('{name}', person.name))) return;
     setActionError('');
     try {
       await deleteUser(person.id);
@@ -33,7 +35,7 @@ export default function AdminUsers() {
     }
   }
 
-  if (loading && !data) return <Loader text="Loading users..." />;
+  if (loading && !data) return <Loader text="loading.users" />;
   if (error) return <ErrorMessage message={error} onRetry={reload} />;
 
   return (
@@ -43,11 +45,11 @@ export default function AdminUsers() {
         <table>
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Bookings</th>
-              <th>Role</th>
-              <th aria-label="Actions" />
+              <th>{t('admin.name')}</th>
+              <th>{t('admin.email')}</th>
+              <th>{t('admin.bookings')}</th>
+              <th>{t('admin.role')}</th>
+              <th aria-label={t('common.actions')} />
             </tr>
           </thead>
           <tbody>
@@ -55,18 +57,18 @@ export default function AdminUsers() {
               const isMe = person.id === currentUser.id;
               return (
                 <tr key={person.id}>
-                  <td>{person.name}{isMe ? ' (you)' : ''}</td>
+                  <td>{person.name}{isMe ? ' ' + t('common.you') : ''}</td>
                   <td>{person.email}</td>
                   <td>{person.bookings_count}</td>
                   <td>
-                    <select value={person.role} disabled={isMe} onChange={(event) => handleRole(person.id, event.target.value)} aria-label="Role">
-                      <option value="user">user</option>
-                      <option value="admin">admin</option>
+                    <select value={person.role} disabled={isMe} onChange={(event) => handleRole(person.id, event.target.value)} aria-label={t('admin.role')}>
+                      <option value="user">{t('admin.roleUser')}</option>
+                      <option value="admin">{t('admin.roleAdmin')}</option>
                     </select>
                   </td>
                   <td className="table-actions">
                     {!isMe && (
-                      <button type="button" className="icon-link danger" aria-label="Delete user" onClick={() => handleDelete(person)}>
+                      <button type="button" className="icon-link danger" aria-label={t('admin.deleteUserLabel')} onClick={() => handleDelete(person)}>
                         <Trash2 size={16} />
                       </button>
                     )}

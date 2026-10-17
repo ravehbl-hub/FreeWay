@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
+import { useLanguage } from '../context/LanguageContext.jsx';
 import { validateLogin } from '../utils/validation.js';
 import FormField from '../components/ui/FormField.jsx';
 import ErrorMessage from '../components/ui/ErrorMessage.jsx';
@@ -10,6 +11,7 @@ import GoogleSignInButton from '../components/auth/GoogleSignInButton.jsx';
 
 export default function LoginPage() {
   const { user, login } = useAuth();
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const location = useLocation();
   const [values, setValues] = useState({ email: '', password: '' });
@@ -43,20 +45,20 @@ export default function LoginPage() {
   }
 
   return (
-    <AuthLayout title="Welcome back" subtitle="Log in to manage your rentals">
+    <AuthLayout title={t('login.title')} subtitle={t('login.subtitle')}>
       <form onSubmit={handleSubmit} noValidate className="form">
-        <FormField label="Email" name="email" type="email" value={values.email} onChange={handleChange} error={errors.email} autoComplete="email" />
-        <FormField label="Password" name="password" type="password" value={values.password} onChange={handleChange} error={errors.password} autoComplete="current-password" />
+        <FormField label={t('login.email')} name="email" type="email" value={values.email} onChange={handleChange} error={errors.email} autoComplete="email" />
+        <FormField label={t('login.password')} name="password" type="password" value={values.password} onChange={handleChange} error={errors.password} autoComplete="current-password" />
         <ErrorMessage message={serverError} />
         <button type="submit" className="button button-green button-block" disabled={submitting}>
-          {submitting ? 'Logging in...' : 'Log in'}
+          {submitting ? t('login.submitting') : t('login.submit')}
         </button>
       </form>
       <GoogleSignInButton onError={setServerError} />
       <p className="auth-switch">
-        No account yet? <Link to="/register">Create one</Link>
+        {t('login.noAccount')} <Link to="/register">{t('login.createOne')}</Link>
       </p>
-      <p className="auth-hint">Demo: user@freeway.com / User123! · admin@freeway.com / Admin123!</p>
+      <p className="auth-hint">{t('login.demo')}</p>
     </AuthLayout>
   );
 }

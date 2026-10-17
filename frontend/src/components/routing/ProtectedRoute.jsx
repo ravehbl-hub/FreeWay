@@ -8,7 +8,7 @@ export default function ProtectedRoute() {
   const location = useLocation();
 
   if (loading) {
-    return <Loader text="Loading FreeWay..." fullPage />;
+    return <Loader text="loading.app" fullPage />;
   }
   if (!user) {
     return <Navigate to="/login" replace state={{ from: location.pathname }} />;

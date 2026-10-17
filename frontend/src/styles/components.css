@@ -385,7 +385,7 @@ td select {
 .unavailable-tag {
   position: absolute;
   top: 12px;
-  right: 12px;
+  inset-inline-end: 12px;
   padding: 3px 8px;
   border-radius: 999px;
   background: #eeeff1;
@@ -408,7 +408,7 @@ table {
 
 th,
 td {
-  text-align: left;
+  text-align: start;
   padding: 12px;
   border-bottom: 1px solid var(--border);
   vertical-align: middle;

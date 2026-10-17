@@ -1,7 +1,9 @@
 // PromoCard: dark picture card with the free-cancellation message
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../../context/LanguageContext.jsx';
 
 export default function PromoCard() {
+  const { t } = useLanguage();
   return (
     <section className="promo-card">
       <svg className="promo-art" viewBox="0 0 300 340" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
@@ -19,16 +21,17 @@ export default function PromoCard() {
       </svg>
       <div className="promo-content">
         <h2>
-          Travel with
-          <br />a free mind
+          {t('promo.title1')}
+          <br />
+          {t('promo.title2')}
         </h2>
         <p>
-          Free cancellation
+          {t('promo.text1')}
           <br />
-          up to 24h before
+          {t('promo.text2')}
         </p>
         <Link to="/vehicles" className="button button-glass">
-          Learn more
+          {t('promo.learnMore')}
         </Link>
       </div>
     </section>

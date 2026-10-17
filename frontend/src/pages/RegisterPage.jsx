@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
+import { useLanguage } from '../context/LanguageContext.jsx';
 import { serverErrorsToFields, validateRegister } from '../utils/validation.js';
 import FormField from '../components/ui/FormField.jsx';
 import ErrorMessage from '../components/ui/ErrorMessage.jsx';
@@ -10,6 +11,7 @@ import GoogleSignInButton from '../components/auth/GoogleSignInButton.jsx';
 
 export default function RegisterPage() {
   const { user, register } = useAuth();
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const [values, setValues] = useState({ name: '', email: '', password: '', confirm: '' });
   const [errors, setErrors] = useState({});
@@ -42,20 +44,20 @@ export default function RegisterPage() {
   }
 
   return (
-    <AuthLayout title="Create your account" subtitle="Start renting with FreeWay in a minute">
+    <AuthLayout title={t('register.title')} subtitle={t('register.subtitle')}>
       <form onSubmit={handleSubmit} noValidate className="form">
-        <FormField label="Full name" name="name" value={values.name} onChange={handleChange} error={errors.name} autoComplete="name" />
-        <FormField label="Email" name="email" type="email" value={values.email} onChange={handleChange} error={errors.email} autoComplete="email" />
-        <FormField label="Password" name="password" type="password" value={values.password} onChange={handleChange} error={errors.password} autoComplete="new-password" />
-        <FormField label="Confirm password" name="confirm" type="password" value={values.confirm} onChange={handleChange} error={errors.confirm} autoComplete="new-password" />
+        <FormField label={t('register.name')} name="name" value={values.name} onChange={handleChange} error={errors.name} autoComplete="name" />
+        <FormField label={t('login.email')} name="email" type="email" value={values.email} onChange={handleChange} error={errors.email} autoComplete="email" />
+        <FormField label={t('login.password')} name="password" type="password" value={values.password} onChange={handleChange} error={errors.password} autoComplete="new-password" />
+        <FormField label={t('register.confirm')} name="confirm" type="password" value={values.confirm} onChange={handleChange} error={errors.confirm} autoComplete="new-password" />
         <ErrorMessage message={serverError} />
         <button type="submit" className="button button-green button-block" disabled={submitting}>
-          {submitting ? 'Creating account...' : 'Create account'}
+          {submitting ? t('register.submitting') : t('register.submit')}
         </button>
       </form>
       <GoogleSignInButton onError={setServerError} />
       <p className="auth-switch">
-        Already registered? <Link to="/login">Log in</Link>
+        {t('register.already')} <Link to="/login">{t('register.login')}</Link>
       </p>
     </AuthLayout>
   );

@@ -18,6 +18,7 @@ own booking history. Admins manage vehicles, all bookings and users.
   - **Chat assistant** (`/api/ai/chat`, `/api/ai/chat/stream`) - structured system prompt that receives the user's bookings and the available fleet **from the DB**; answers stream to the browser (SSE). Conversations and messages are **saved in the DB**.
   - **Recommended for you** (`/api/ai/recommendations`) - Gemini **structured JSON output** (vehicle ids + reasons + score) based on booking history; ids are validated and the result is **saved in the DB**.
   - Rate limiting (10 AI requests / minute / user), 20s timeout (AbortController), clear HTTP errors (429 / 502 / 503 / 504).
+- **Hebrew / English UI with RTL support**: language toggle in the top bar, on the login page and in Profile → Settings. The choice is saved in `localStorage`, `<html dir>` flips to `rtl` for Hebrew, and the AI assistant answers in the chosen language (`language` field in the chat request).
 - Loading, error and empty states on every page; client-side and server-side validation with clear messages; responsive (bottom navigation on mobile).
 
 ## Tech stack
@@ -60,9 +61,10 @@ Freeway/
     └── src/
         ├── main.jsx, App.jsx  # entry + routes
         ├── api/               # one file per feature (client, auth, vehicles, bookings, stats, users, ai)
-        ├── context/           # AuthContext.jsx
+        ├── context/           # AuthContext.jsx, LanguageContext.jsx
+        ├── i18n/              # en.js, he.js, index.js (translations, no library)
         ├── hooks/             # useFetch.js
-        ├── components/        # layout, routing, ui, dashboard, vehicles, bookings, ai, admin
+        ├── components/        # layout (incl. LanguageToggle), routing, ui, dashboard, vehicles, bookings, ai, admin
         ├── pages/             # one file per page
         ├── utils/             # validation, format, pickup locations
         └── styles/            # base, layout, components, dashboard, pages

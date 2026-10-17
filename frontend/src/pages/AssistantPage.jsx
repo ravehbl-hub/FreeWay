@@ -5,10 +5,12 @@ import { deleteConversation, fetchConversations, fetchMessages, streamChat } fro
 import ChatWindow from '../components/ai/ChatWindow.jsx';
 import ConversationList from '../components/ai/ConversationList.jsx';
 import ErrorMessage from '../components/ui/ErrorMessage.jsx';
+import { useLanguage } from '../context/LanguageContext.jsx';
 
 export default function AssistantPage() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { t, lang } = useLanguage();
   const [conversations, setConversations] = useState([]);
   const [activeId, setActiveId] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -79,7 +81,7 @@ export default function AssistantPage() {
       const result = await streamChat(text, activeId, (chunk) => {
         fullText += chunk;
         setStreamingText(fullText);
-      });
+      }, lang);
       setMessages((old) => [...old, result.reply]);
       if (!activeId) {
         setActiveId(result.conversationId);
@@ -96,8 +98,8 @@ export default function AssistantPage() {
 
   return (
     <div>
-      <h1 className="page-title">AI Assistant</h1>
-      <p className="page-subtitle">Powered by Google Gemini · answers use the FreeWay catalog and your bookings.</p>
+      <h1 className="page-title">{t('assistant.title')}</h1>
+      <p className="page-subtitle">{t('assistant.subtitle')}</p>
       <ErrorMessage message={listError} />
       <div className="assistant-layout">
         <ConversationList

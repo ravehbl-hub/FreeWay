@@ -237,7 +237,7 @@
   padding: 10px 12px;
   border: none;
   background: none;
-  text-align: left;
+  text-align: start;
   cursor: pointer;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -262,7 +262,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding-right: 4px;
+  padding-inline-end: 4px;
 }
 
 .chat-empty {
@@ -307,12 +307,12 @@
 .chat-user .chat-bubble {
   background: var(--dark);
   color: #ffffff;
-  border-bottom-right-radius: 6px;
+  border-end-end-radius: 6px;
 }
 
 .chat-assistant .chat-bubble {
   background: var(--card-soft);
-  border-bottom-left-radius: 6px;
+  border-end-start-radius: 6px;
 }
 
 .chat-form {

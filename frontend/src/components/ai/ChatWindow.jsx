@@ -3,15 +3,13 @@ import { useEffect, useRef, useState } from 'react';
 import { Send, Sparkles } from 'lucide-react';
 import ChatMessage from './ChatMessage.jsx';
 import ErrorMessage from '../ui/ErrorMessage.jsx';
+import { useLanguage } from '../../context/LanguageContext.jsx';
 
-const SUGGESTIONS = [
-  'Which car is best for a family of 5?',
-  'Compare the BMW i4 and the Mercedes C-Class',
-  'How much is a compact car for 4 days with insurance?',
-  'Recommend an electric car based on my history',
-];
+// Translation keys of the example questions
+const SUGGESTIONS = ['assistant.s1', 'assistant.s2', 'assistant.s3', 'assistant.s4'];
 
 export default function ChatWindow({ messages, streamingText, sending, error, onSend }) {
+  const { t } = useLanguage();
   const [text, setText] = useState('');
   const [inputError, setInputError] = useState('');
   const bottomRef = useRef(null);
@@ -27,11 +25,11 @@ export default function ChatWindow({ messages, streamingText, sending, error, on
     event.preventDefault();
     const message = text.trim();
     if (!message) {
-      setInputError('Write a message first');
+      setInputError('assistant.writeFirst');
       return;
     }
     if (message.length > 1000) {
-      setInputError('Message is too long (max 1000 characters)');
+      setInputError('assistant.tooLong');
       return;
     }
     onSend(message);
@@ -44,12 +42,12 @@ export default function ChatWindow({ messages, streamingText, sending, error, on
         {messages.length === 0 && !sending && (
           <div className="chat-empty">
             <Sparkles size={28} />
-            <h2>How can I help you today?</h2>
-            <p className="muted">I know our whole fleet and your booking history.</p>
+            <h2>{t('assistant.emptyTitle')}</h2>
+            <p className="muted">{t('assistant.emptyText')}</p>
             <div className="suggestions">
               {SUGGESTIONS.map((suggestion) => (
-                <button key={suggestion} type="button" className="chip chip-button" onClick={() => onSend(suggestion)}>
-                  {suggestion}
+                <button key={suggestion} type="button" className="chip chip-button" onClick={() => onSend(t(suggestion))}>
+                  {t(suggestion)}
                 </button>
               ))}
             </div>
@@ -58,7 +56,7 @@ export default function ChatWindow({ messages, streamingText, sending, error, on
         {messages.map((message, index) => (
           <ChatMessage key={message.id || index} role={message.role} content={message.content} />
         ))}
-        {sending && <ChatMessage role="assistant" content={streamingText || 'Thinking...'} />}
+        {sending && <ChatMessage role="assistant" content={streamingText || t('common.thinking')} />}
         <div ref={bottomRef} />
       </div>
 
@@ -70,15 +68,15 @@ export default function ChatWindow({ messages, streamingText, sending, error, on
             setText(event.target.value);
             setInputError('');
           }}
-          placeholder="Ask about vehicles, prices, insurance..."
-          aria-label="Message"
+          placeholder={t('assistant.placeholder')}
+          aria-label={t('assistant.messageLabel')}
           disabled={sending}
         />
         <button type="submit" className="button button-dark" disabled={sending}>
-          Send <Send size={16} />
+          {t('common.send')} <Send size={16} className="flip-rtl" />
         </button>
       </form>
-      {inputError && <p className="field-message">{inputError}</p>}
+      {inputError && <p className="field-message">{t(inputError)}</p>}
     </section>
   );
 }

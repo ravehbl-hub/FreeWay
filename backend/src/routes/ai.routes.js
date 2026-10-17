@@ -13,6 +13,7 @@ router.use(requireAuth);
 const chatRules = [
   body('message').trim().isLength({ min: 1, max: 1000 }).withMessage('Message must be 1-1000 characters'),
   body('conversationId').optional({ values: 'null' }).isInt().withMessage('Invalid conversation id').toInt(),
+  body('language').optional().isIn(['en', 'he']).withMessage('Language must be en or he'),
 ];
 const idRule = param('id').isInt().withMessage('Invalid conversation id').toInt();
 

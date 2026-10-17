@@ -2,8 +2,10 @@
 import { useState } from 'react';
 import { Lock, Nfc } from 'lucide-react';
 import { formatPrice } from '../../utils/format.js';
+import { useLanguage } from '../../context/LanguageContext.jsx';
 
 export default function PaymentCard({ booking, onPay }) {
+  const { t } = useLanguage();
   const [paying, setPaying] = useState(false);
   const [error, setError] = useState('');
   const canPay = booking && booking.status === 'pending';
@@ -21,8 +23,8 @@ export default function PaymentCard({ booking, onPay }) {
 
   return (
     <section className="card payment-card">
-      <h2>Payment method</h2>
-      <p className="muted">Bank card</p>
+      <h2>{t('payment.title')}</h2>
+      <p className="muted">{t('payment.bankCard')}</p>
       <div className="bank-card">
         <div className="bank-card-number">
           <span>••••</span>
@@ -31,14 +33,14 @@ export default function PaymentCard({ booking, onPay }) {
           <span>2468</span>
           <Nfc size={22} className="bank-card-nfc" />
         </div>
-        <span className="bank-card-expiry">Expires 06/28</span>
+        <span className="bank-card-expiry">{t('payment.expires')}</span>
       </div>
       <button type="button" className="button button-green button-block" disabled={!canPay || paying} onClick={handlePay}>
-        {paying ? 'Processing...' : canPay ? 'Pay now · ' + formatPrice(booking.total_price) : 'Nothing to pay'}
+        {paying ? t('payment.processing') : canPay ? t('payment.payNow') + ' · ' + formatPrice(booking.total_price) : t('payment.nothing')}
       </button>
       {error && <p className="field-message">{error}</p>}
       <p className="secure-note">
-        <Lock size={14} /> Secure payment (demo)
+        <Lock size={14} /> {t('payment.secure')}
       </p>
     </section>
   );

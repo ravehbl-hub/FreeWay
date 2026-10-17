@@ -22,14 +22,15 @@ export function generateRecommendations() {
 }
 
 // Streaming chat: reads the Server-Sent Events from the server and calls onChunk(text) for each piece.
+// language ('en' / 'he') tells the server in which language the assistant should answer.
 // Returns the final { conversationId, reply }.
-export async function streamChat(message, conversationId, onChunk) {
+export async function streamChat(message, conversationId, onChunk, language) {
   let response;
   try {
     response = await fetch(API_URL + '/ai/chat/stream', {
       method: 'POST',
       headers: authHeaders(),
-      body: JSON.stringify({ message: message, conversationId: conversationId || null }),
+      body: JSON.stringify({ message: message, conversationId: conversationId || null, language: language || 'en' }),
     });
   } catch {
     throw new Error('Cannot reach the server. Is the backend running?');

@@ -1,28 +1,30 @@
 // VehicleCard: car picture, category, seats, transmission and price per day
 import { Link } from 'react-router-dom';
 import { Cog, User } from 'lucide-react';
-import { capitalize, formatPrice } from '../../utils/format.js';
+import { formatPrice } from '../../utils/format.js';
+import { useLanguage } from '../../context/LanguageContext.jsx';
 import VehicleImage from '../ui/VehicleImage.jsx';
 
 export default function VehicleCard({ vehicle, reason, showName = true }) {
+  const { t } = useLanguage();
   return (
     <Link to={'/vehicles/' + vehicle.id} className="vehicle-card">
       <VehicleImage src={vehicle.image_url} category={vehicle.category} alt={vehicle.name} className="vehicle-card-image" />
-      <h3>{capitalize(vehicle.category)}</h3>
+      <h3>{t('category.' + vehicle.category)}</h3>
       {showName && <p className="vehicle-card-name">{vehicle.name}</p>}
       <div className="vehicle-specs">
         <span>
           <User size={16} strokeWidth={1.6} /> {vehicle.seats}
         </span>
         <span>
-          <Cog size={16} strokeWidth={1.6} /> {vehicle.transmission === 'auto' ? 'Auto' : 'Manual'}
+          <Cog size={16} strokeWidth={1.6} /> {vehicle.transmission === 'auto' ? t('common.auto') : t('common.manual')}
         </span>
       </div>
       <p className="vehicle-price">
-        {formatPrice(vehicle.price_per_day)} <span>/ day</span>
+        {formatPrice(vehicle.price_per_day)} <span>{t('common.perDay')}</span>
       </p>
       {reason && <p className="vehicle-reason">✦ {reason}</p>}
-      {vehicle.available === false && <span className="unavailable-tag">Unavailable</span>}
+      {vehicle.available === false && <span className="unavailable-tag">{t('common.unavailable')}</span>}
     </Link>
   );
 }

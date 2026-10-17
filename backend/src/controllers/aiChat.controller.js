@@ -3,7 +3,7 @@ import * as aiChatService from '../services/aiChat.service.js';
 
 export async function chat(req, res, next) {
   try {
-    const result = await aiChatService.sendMessage(req.user, req.body.message, req.body.conversationId);
+    const result = await aiChatService.sendMessage(req.user, req.body.message, req.body.conversationId, req.body.language);
     res.json(result);
   } catch (err) {
     next(err);
@@ -26,7 +26,8 @@ export async function chatStream(req, res) {
       req.user,
       req.body.message,
       req.body.conversationId,
-      (text) => send({ type: 'chunk', text: text })
+      (text) => send({ type: 'chunk', text: text }),
+      req.body.language
     );
     send({ type: 'done', conversationId: result.conversationId, reply: result.reply });
   } catch (err) {

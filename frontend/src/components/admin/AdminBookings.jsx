@@ -7,8 +7,10 @@ import { formatPrice } from '../../utils/format.js';
 import Loader from '../ui/Loader.jsx';
 import ErrorMessage from '../ui/ErrorMessage.jsx';
 import EmptyState from '../ui/EmptyState.jsx';
+import { useLanguage } from '../../context/LanguageContext.jsx';
 
 export default function AdminBookings() {
+  const { t } = useLanguage();
   const { data, loading, error, reload } = useFetch(fetchAllBookings);
   const [actionError, setActionError] = useState('');
 
@@ -23,7 +25,7 @@ export default function AdminBookings() {
   }
 
   async function handleDelete(id) {
-    if (!window.confirm('Delete this booking permanently?')) return;
+    if (!window.confirm(t('admin.deleteBooking'))) return;
     setActionError('');
     try {
       await deleteBooking(id);
@@ -33,9 +35,9 @@ export default function AdminBookings() {
     }
   }
 
-  if (loading && !data) return <Loader text="Loading bookings..." />;
+  if (loading && !data) return <Loader text="loading.bookings" />;
   if (error) return <ErrorMessage message={error} onRetry={reload} />;
-  if (data.bookings.length === 0) return <EmptyState title="No bookings yet" />;
+  if (data.bookings.length === 0) return <EmptyState title={t('admin.noBookings')} />;
 
   return (
     <div>
@@ -44,12 +46,12 @@ export default function AdminBookings() {
         <table>
           <thead>
             <tr>
-              <th>Customer</th>
-              <th>Vehicle</th>
-              <th>Dates</th>
-              <th>Total</th>
-              <th>Status</th>
-              <th aria-label="Actions" />
+              <th>{t('admin.customer')}</th>
+              <th>{t('admin.vehicle')}</th>
+              <th>{t('admin.dates')}</th>
+              <th>{t('admin.total')}</th>
+              <th>{t('common.status')}</th>
+              <th aria-label={t('common.actions')} />
             </tr>
           </thead>
           <tbody>
@@ -66,14 +68,14 @@ export default function AdminBookings() {
                 </td>
                 <td>{formatPrice(booking.total_price)}</td>
                 <td>
-                  <select value={booking.status} onChange={(event) => handleStatus(booking.id, event.target.value)} aria-label="Status">
-                    <option value="pending">pending</option>
-                    <option value="confirmed">confirmed</option>
-                    <option value="cancelled">cancelled</option>
+                  <select value={booking.status} onChange={(event) => handleStatus(booking.id, event.target.value)} aria-label={t('common.status')}>
+                    <option value="pending">{t('status.pending')}</option>
+                    <option value="confirmed">{t('status.confirmed')}</option>
+                    <option value="cancelled">{t('status.cancelled')}</option>
                   </select>
                 </td>
                 <td className="table-actions">
-                  <button type="button" className="icon-link danger" aria-label="Delete" onClick={() => handleDelete(booking.id)}>
+                  <button type="button" className="icon-link danger" aria-label={t('common.delete')} onClick={() => handleDelete(booking.id)}>
                     <Trash2 size={16} />
                   </button>
                 </td>

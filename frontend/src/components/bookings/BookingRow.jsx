@@ -4,8 +4,10 @@ import { formatPrice, longDate } from '../../utils/format.js';
 import StatusBadge from '../ui/StatusBadge.jsx';
 import VehicleImage from '../ui/VehicleImage.jsx';
 import BookingForm from './BookingForm.jsx';
+import { useLanguage } from '../../context/LanguageContext.jsx';
 
 export default function BookingRow({ booking, onPay, onCancel, onUpdate }) {
+  const { t, lang } = useLanguage();
   const [editing, setEditing] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
@@ -34,11 +36,11 @@ export default function BookingRow({ booking, onPay, onCancel, onUpdate }) {
         <div className="booking-row-info">
           <h3>{booking.vehicle_name}</h3>
           <p className="muted">
-            {longDate(booking.start_date)} → {longDate(booking.end_date)}
+            {longDate(booking.start_date, lang)} → {longDate(booking.end_date, lang)}
           </p>
           <p className="muted">
             {booking.pickup_location} · {booking.pickup_time}
-            {booking.insurance ? ' · insured' : ''}
+            {booking.insurance ? ' · ' + t('bookings.insured') : ''}
           </p>
         </div>
         <div className="booking-row-side">
@@ -51,12 +53,12 @@ export default function BookingRow({ booking, onPay, onCancel, onUpdate }) {
         <div className="booking-row-actions">
           {isPending && (
             <button type="button" className="button button-green button-small" disabled={busy} onClick={() => runAction(onPay)}>
-              Pay now
+              {t('bookings.payNow')}
             </button>
           )}
           {isPending && (
             <button type="button" className="button button-light button-small" onClick={() => setEditing(!editing)}>
-              {editing ? 'Close' : 'Edit'}
+              {editing ? t('common.close') : t('common.edit')}
             </button>
           )}
           <button
@@ -64,10 +66,10 @@ export default function BookingRow({ booking, onPay, onCancel, onUpdate }) {
             className="button button-danger button-small"
             disabled={busy}
             onClick={() => {
-              if (window.confirm('Cancel this booking?')) runAction(onCancel);
+              if (window.confirm(t('bookings.confirmCancel'))) runAction(onCancel);
             }}
           >
-            Cancel
+            {t('common.cancel')}
           </button>
         </div>
       )}
@@ -83,7 +85,7 @@ export default function BookingRow({ booking, onPay, onCancel, onUpdate }) {
             pickup_location: booking.pickup_location,
             insurance: booking.insurance,
           }}
-          submitLabel="Save changes"
+          submitLabel={t('common.save')}
           onSubmit={handleUpdate}
         />
       )}

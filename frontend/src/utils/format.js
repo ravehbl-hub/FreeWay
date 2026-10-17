@@ -1,20 +1,29 @@
-// Formatting helpers for prices and dates
+// Formatting helpers for prices and dates. Date helpers take the language ('en' / 'he').
 export function formatPrice(value) {
   return Number(value).toFixed(0) + ' €';
 }
 
-const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-
-// '2026-07-04' -> { day: 4, month: 'JUL' }
-export function dayAndMonth(isoDate) {
-  const parts = isoDate.split('-');
-  return { day: Number(parts[2]), month: MONTHS[Number(parts[1]) - 1] };
+// Browser locale for each app language
+export function localeFor(lang) {
+  return lang === 'he' ? 'he-IL' : 'en-GB';
 }
 
-// '2026-07-04' -> 'Saturday, 4 July 2026'
-export function longDate(isoDate) {
+const MONTHS = {
+  en: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+  he: ['ינו׳', 'פבר׳', 'מרץ', 'אפר׳', 'מאי', 'יוני', 'יולי', 'אוג׳', 'ספט׳', 'אוק׳', 'נוב׳', 'דצמ׳'],
+};
+
+// '2026-07-04' -> { day: 4, month: 'JUL' }
+export function dayAndMonth(isoDate, lang = 'en') {
+  const parts = isoDate.split('-');
+  const months = MONTHS[lang] || MONTHS.en;
+  return { day: Number(parts[2]), month: months[Number(parts[1]) - 1] };
+}
+
+// '2026-07-04' -> 'Saturday, 4 July 2026' (or the Hebrew version)
+export function longDate(isoDate, lang = 'en') {
   const date = new Date(isoDate + 'T00:00:00');
-  return date.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  return date.toLocaleDateString(localeFor(lang), { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
 }
 
 export function daysBetween(startDate, endDate) {
@@ -25,10 +34,4 @@ export function daysBetween(startDate, endDate) {
 
 export function todayISO() {
   return new Date().toISOString().slice(0, 10);
-}
-
-export function capitalize(text) {
-  if (!text) return '';
-  if (text === 'suv') return 'SUV';
-  return text.charAt(0).toUpperCase() + text.slice(1);
 }

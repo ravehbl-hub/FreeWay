@@ -8,29 +8,31 @@ import AdminVehicles from '../components/admin/AdminVehicles.jsx';
 import AdminBookings from '../components/admin/AdminBookings.jsx';
 import AdminUsers from '../components/admin/AdminUsers.jsx';
 import ErrorMessage from '../components/ui/ErrorMessage.jsx';
+import { useLanguage } from '../context/LanguageContext.jsx';
 
 const TABS = [
-  { id: 'vehicles', label: 'Vehicles' },
-  { id: 'bookings', label: 'Bookings' },
-  { id: 'users', label: 'Users' },
+  { id: 'vehicles', label: 'admin.vehicles' },
+  { id: 'bookings', label: 'admin.bookings' },
+  { id: 'users', label: 'admin.users' },
 ];
 
 export default function AdminPage() {
+  const { t } = useLanguage();
   const [tab, setTab] = useState('vehicles');
   const { data, error } = useFetch(fetchAdminStats);
 
   return (
     <div>
-      <h1 className="page-title">Admin</h1>
-      <p className="page-subtitle">Manage the fleet, bookings and users.</p>
+      <h1 className="page-title">{t('admin.title')}</h1>
+      <p className="page-subtitle">{t('admin.subtitle')}</p>
 
       <ErrorMessage message={error} />
       {data && (
         <div className="stats-row stats-row-4">
-          <StatCard icon={Users} value={data.stats.users} label="Users" />
-          <StatCard icon={Car} value={data.stats.vehicles} label="Vehicles" />
-          <StatCard icon={CalendarDays} value={data.stats.bookings} label="Bookings" />
-          <StatCard icon={Euro} value={Math.round(data.stats.revenue)} label="Confirmed revenue (€)" />
+          <StatCard icon={Users} value={data.stats.users} label={t('admin.users')} />
+          <StatCard icon={Car} value={data.stats.vehicles} label={t('admin.vehicles')} />
+          <StatCard icon={CalendarDays} value={data.stats.bookings} label={t('admin.bookings')} />
+          <StatCard icon={Euro} value={Math.round(data.stats.revenue)} label={t('admin.revenue')} />
         </div>
       )}
 
@@ -44,7 +46,7 @@ export default function AdminPage() {
             className={tab === item.id ? 'tab active' : 'tab'}
             onClick={() => setTab(item.id)}
           >
-            {item.label}
+            {t(item.label)}
           </button>
         ))}
       </div>

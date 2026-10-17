@@ -4,6 +4,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext.jsx';
+import { useLanguage } from '../../context/LanguageContext.jsx';
 
 const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || '';
 const SCRIPT_URL = 'https://accounts.google.com/gsi/client';
@@ -29,6 +30,7 @@ function loadGoogleScript() {
 
 export default function GoogleSignInButton({ onError }) {
   const { loginWithGoogle } = useAuth();
+  const { t, lang } = useLanguage();
   const navigate = useNavigate();
   const buttonRef = useRef(null);
   const [failed, setFailed] = useState(false);
@@ -57,6 +59,7 @@ export default function GoogleSignInButton({ onError }) {
           shape: 'pill',
           width: 320,
           text: 'continue_with',
+          locale: lang,
         });
       })
       .catch(() => {
@@ -66,15 +69,15 @@ export default function GoogleSignInButton({ onError }) {
     return () => {
       cancelled = true;
     };
-  }, [loginWithGoogle, navigate, onError]);
+  }, [loginWithGoogle, navigate, onError, lang]);
 
   if (!CLIENT_ID) return null;
 
   return (
     <div>
-      <div className="auth-divider">or</div>
+      <div className="auth-divider">{t('common.or')}</div>
       {failed ? (
-        <p className="auth-hint">Google sign-in is unavailable right now.</p>
+        <p className="auth-hint">{t('google.unavailable')}</p>
       ) : (
         <div className="google-button" ref={buttonRef} />
       )}

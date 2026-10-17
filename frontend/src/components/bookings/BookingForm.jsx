@@ -5,11 +5,13 @@ import { PICKUP_LOCATIONS } from '../../utils/pickupLocations.js';
 import { daysBetween, formatPrice, todayISO } from '../../utils/format.js';
 import { serverErrorsToFields, validateBooking } from '../../utils/validation.js';
 import FormField from '../ui/FormField.jsx';
+import { useLanguage } from '../../context/LanguageContext.jsx';
 import ErrorMessage from '../ui/ErrorMessage.jsx';
 
 const INSURANCE_PER_DAY = 12; // same value as the server
 
 export default function BookingForm({ vehicle, initialValues, submitLabel, onSubmit }) {
+  const { t } = useLanguage();
   const [values, setValues] = useState(
     initialValues || { start_date: '', end_date: '', pickup_time: '10:00', pickup_location: PICKUP_LOCATIONS[0], insurance: false }
   );
@@ -53,12 +55,12 @@ export default function BookingForm({ vehicle, initialValues, submitLabel, onSub
   return (
     <form className="form booking-form" onSubmit={handleSubmit} noValidate>
       <div className="form-row">
-        <FormField label="Pickup date" name="start_date" type="date" min={todayISO()} value={values.start_date} onChange={handleChange} error={errors.start_date} />
-        <FormField label="Return date" name="end_date" type="date" min={values.start_date || todayISO()} value={values.end_date} onChange={handleChange} error={errors.end_date} />
+        <FormField label={t('booking.pickupDate')} name="start_date" type="date" min={todayISO()} value={values.start_date} onChange={handleChange} error={errors.start_date} />
+        <FormField label={t('booking.returnDate')} name="end_date" type="date" min={values.start_date || todayISO()} value={values.end_date} onChange={handleChange} error={errors.end_date} />
       </div>
       <div className="form-row">
-        <FormField label="Pickup time" name="pickup_time" type="time" value={values.pickup_time} onChange={handleChange} error={errors.pickup_time} />
-        <FormField label="Pickup location" error={errors.pickup_location}>
+        <FormField label={t('booking.pickupTime')} name="pickup_time" type="time" value={values.pickup_time} onChange={handleChange} error={errors.pickup_time} />
+        <FormField label={t('booking.pickupLocation')} error={errors.pickup_location}>
           <select name="pickup_location" value={values.pickup_location} onChange={handleChange}>
             {PICKUP_LOCATIONS.map((location) => (
               <option key={location} value={location}>
@@ -70,20 +72,20 @@ export default function BookingForm({ vehicle, initialValues, submitLabel, onSub
       </div>
       <label className="checkbox">
         <input type="checkbox" name="insurance" checked={values.insurance} onChange={handleChange} />
-        Full insurance (+{INSURANCE_PER_DAY} € / day)
+        {t('booking.insurance').replace('{price}', INSURANCE_PER_DAY)}
       </label>
 
       <div className="price-summary">
         <span>
-          {days} day{days === 1 ? '' : 's'} × {formatPrice(vehicle.price_per_day)}
-          {values.insurance ? ' + insurance' : ''}
+          {days} {days === 1 ? t('common.day') : t('common.days')} × {formatPrice(vehicle.price_per_day)}
+          {values.insurance ? ' ' + t('booking.plusInsurance') : ''}
         </span>
         <strong>{formatPrice(total)}</strong>
       </div>
 
       <ErrorMessage message={serverError} />
       <button type="submit" className="button button-green button-block" disabled={submitting}>
-        {submitting ? 'Saving...' : submitLabel}
+        {submitting ? t('common.saving') : submitLabel}
       </button>
     </form>
   );

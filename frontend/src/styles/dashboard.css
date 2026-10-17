@@ -49,7 +49,7 @@
 
 .hero-car {
   position: absolute;
-  right: -10px;
+  inset-inline-end: -10px;
   bottom: -10px;
   width: 72%;
   max-width: 640px;
@@ -174,7 +174,7 @@
 }
 
 .ai-toolbar .button {
-  margin-left: auto;
+  margin-inline-start: auto;
 }
 
 .tool-button {
@@ -270,7 +270,7 @@
 }
 
 .booking-card-footer .status-badge {
-  margin-left: auto;
+  margin-inline-start: auto;
 }
 
 .booking-empty-button {
@@ -299,7 +299,7 @@
 }
 
 .bank-card-nfc {
-  margin-left: auto;
+  margin-inline-start: auto;
 }
 
 .bank-card-expiry {

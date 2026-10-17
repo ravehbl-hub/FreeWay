@@ -3,13 +3,15 @@ import { useState } from 'react';
 import { Pencil, Plus, Trash2 } from 'lucide-react';
 import { useFetch } from '../../hooks/useFetch.js';
 import { createVehicle, deleteVehicle, fetchVehicles, updateVehicle } from '../../api/vehicles.api.js';
-import { capitalize, formatPrice } from '../../utils/format.js';
+import { formatPrice } from '../../utils/format.js';
+import { useLanguage } from '../../context/LanguageContext.jsx';
 import VehicleForm from './VehicleForm.jsx';
 import Loader from '../ui/Loader.jsx';
 import ErrorMessage from '../ui/ErrorMessage.jsx';
 import EmptyState from '../ui/EmptyState.jsx';
 
 export default function AdminVehicles() {
+  const { t } = useLanguage();
   const { data, loading, error, reload } = useFetch(() => fetchVehicles());
   const [editing, setEditing] = useState(null); // null = closed, 'new' = add form, object = edit form
   const [actionError, setActionError] = useState('');
@@ -25,7 +27,7 @@ export default function AdminVehicles() {
   }
 
   async function handleDelete(vehicle) {
-    if (!window.confirm('Delete ' + vehicle.name + '? Its bookings will also be deleted.')) return;
+    if (!window.confirm(t('admin.deleteVehicle').replace('{name}', vehicle.name))) return;
     setActionError('');
     try {
       await deleteVehicle(vehicle.id);
@@ -35,7 +37,7 @@ export default function AdminVehicles() {
     }
   }
 
-  if (loading && !data) return <Loader text="Loading vehicles..." />;
+  if (loading && !data) return <Loader text="loading.vehicles" />;
   if (error) return <ErrorMessage message={error} onRetry={reload} />;
 
   return (
@@ -44,38 +46,38 @@ export default function AdminVehicles() {
         <VehicleForm vehicle={editing === 'new' ? null : editing} onSubmit={handleSave} onCancel={() => setEditing(null)} />
       ) : (
         <button type="button" className="button button-green" onClick={() => setEditing('new')}>
-          <Plus size={16} /> Add vehicle
+          <Plus size={16} /> {t('admin.addVehicle')}
         </button>
       )}
       <ErrorMessage message={actionError} />
       {data.vehicles.length === 0 ? (
-        <EmptyState title="No vehicles" text="Add the first vehicle to the fleet." />
+        <EmptyState title={t('admin.noVehicles')} text={t('admin.noVehiclesText')} />
       ) : (
         <div className="table-wrap card">
           <table>
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Category</th>
-                <th>Seats</th>
-                <th>Price</th>
-                <th>Status</th>
-                <th aria-label="Actions" />
+                <th>{t('admin.name')}</th>
+                <th>{t('admin.category')}</th>
+                <th>{t('admin.seats')}</th>
+                <th>{t('admin.price')}</th>
+                <th>{t('common.status')}</th>
+                <th aria-label={t('common.actions')} />
               </tr>
             </thead>
             <tbody>
               {data.vehicles.map((vehicle) => (
                 <tr key={vehicle.id}>
                   <td>{vehicle.name}</td>
-                  <td>{capitalize(vehicle.category)}</td>
+                  <td>{t('category.' + vehicle.category)}</td>
                   <td>{vehicle.seats}</td>
                   <td>{formatPrice(vehicle.price_per_day)}</td>
-                  <td>{vehicle.available ? 'Available' : 'Hidden'}</td>
+                  <td>{vehicle.available ? t('common.available') : t('common.hidden')}</td>
                   <td className="table-actions">
-                    <button type="button" className="icon-link" aria-label="Edit" onClick={() => setEditing(vehicle)}>
+                    <button type="button" className="icon-link" aria-label={t('common.edit')} onClick={() => setEditing(vehicle)}>
                       <Pencil size={16} />
                     </button>
-                    <button type="button" className="icon-link danger" aria-label="Delete" onClick={() => handleDelete(vehicle)}>
+                    <button type="button" className="icon-link danger" aria-label={t('common.delete')} onClick={() => handleDelete(vehicle)}>
                       <Trash2 size={16} />
                     </button>
                   </td>

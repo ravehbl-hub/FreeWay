@@ -89,3 +89,44 @@ textarea {
   outline: 2px solid var(--green);
   outline-offset: 2px;
 }
+
+/* ---- Right-to-left (Hebrew) ----
+   The LanguageContext sets <html dir="rtl">. Flex and grid layouts mirror by themselves,
+   and the CSS above uses logical properties (inline-start / inline-end). Only a few extras: */
+[dir='rtl'] body {
+  font-family: 'Inter', 'Segoe UI', 'Arial Hebrew', Arial, system-ui, sans-serif;
+}
+
+[dir='rtl'] .page-title,
+[dir='rtl'] .hero-title,
+[dir='rtl'] .brand {
+  letter-spacing: 0;
+}
+
+/* Arrow-like icons must point the other way in RTL */
+[dir='rtl'] .flip-rtl {
+  transform: scaleX(-1);
+}
+
+/* The hero car picture is a cutout facing left, so mirror it in RTL */
+[dir='rtl'] .hero-car {
+  transform: scaleX(-1);
+}
+
+/* Language toggle (top bar / login page) and the language card buttons */
+.lang-button {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.auth-card-top {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 4px;
+}
+
+.language-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}

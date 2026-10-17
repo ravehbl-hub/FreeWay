@@ -40,13 +40,15 @@ export async function deleteConversation(conversationId, userId) {
   await query('DELETE FROM ai_conversations WHERE id = $1', [conversationId]);
 }
 
-// Builds the full system prompt with fresh data from the DB
-async function buildSystemPrompt(user) {
+// Builds the full system prompt with fresh data from the DB.
+// language is 'en' or 'he' (the language the app is set to in the browser).
+async function buildSystemPrompt(user, language) {
   const bookingsText = await getBookingsText(user.id);
   const vehiclesText = await getVehiclesText();
   return fillTemplate(CHAT_SYSTEM_PROMPT, {
     TODAY: todayISO(),
     USER_NAME: user.name,
+    LANGUAGE: language === 'he' ? 'Hebrew' : 'English',
     INSURANCE_PER_DAY: INSURANCE_PER_DAY,
     BOOKINGS: bookingsText,
     VEHICLES: vehiclesText,
@@ -88,14 +90,14 @@ async function saveMessage(conversationId, role, content) {
 }
 
 // Prepares the prompt and the message history for one chat turn
-async function prepareChat(user, message, conversationId) {
+async function prepareChat(user, message, conversationId, language) {
   let history = [];
   if (conversationId) {
     await getOwnedConversation(conversationId, user.id);
     history = await getHistoryForGemini(conversationId);
   }
   history.push({ role: 'user', parts: [{ text: message }] });
-  const systemPrompt = await buildSystemPrompt(user);
+  const systemPrompt = await buildSystemPrompt(user, language);
   return { systemPrompt: systemPrompt, history: history };
 }
 
@@ -112,15 +114,15 @@ async function saveTurn(user, message, conversationId, answer) {
 }
 
 // Normal (non streaming) chat: returns the full answer at once
-export async function sendMessage(user, message, conversationId) {
-  const chat = await prepareChat(user, message, conversationId);
+export async function sendMessage(user, message, conversationId, language) {
+  const chat = await prepareChat(user, message, conversationId, language);
   const answer = await generateText(chat.systemPrompt, chat.history);
   return saveTurn(user, message, conversationId, answer);
 }
 
 // Streaming chat: onChunk is called for every piece of text
-export async function streamMessage(user, message, conversationId, onChunk) {
-  const chat = await prepareChat(user, message, conversationId);
+export async function streamMessage(user, message, conversationId, onChunk, language) {
+  const chat = await prepareChat(user, message, conversationId, language);
   const answer = await streamText(chat.systemPrompt, chat.history, onChunk);
   return saveTurn(user, message, conversationId, answer);
 }
