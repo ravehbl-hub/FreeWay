@@ -17,6 +17,7 @@ own booking history. Admins manage vehicles, all bookings and users.
 - **Dashboard** (follows the UI reference): stat tiles (bookings this month, availability %, CO2 saved), AI panel with quick actions, pickup map card, next booking card, payment card, recommended vehicles, promo card.
 - **AI (server-side only, Gemini)**:
   - **Chat assistant** (`/api/ai/chat`, `/api/ai/chat/stream`) - structured system prompt that receives the user's bookings and the available fleet **from the DB**; answers stream to the browser (SSE). Conversations and messages are **saved in the DB**.
+  - **Actions with tool use (function calling)**: the assistant can **book** or **cancel** for the user ("book the Toyota Yaris from 20/10/2026 to 30/10/2026"). Gemini asks for the `create_booking` / `cancel_booking` tool declared in `backend/src/ai/tools.js`; the server runs it through the normal bookings service (date checks, overlap check, price calculation), sends the result back to Gemini, and the model confirms to the user. Max 3 tool rounds per message.
   - **Recommended for you** (`/api/ai/recommendations`) - Gemini **structured JSON output** (vehicle ids + reasons + score) based on booking history; ids are validated and the result is **saved in the DB**.
   - Rate limiting (10 AI requests / minute / user), 20s timeout (AbortController), clear HTTP errors (429 / 502 / 503 / 504).
 - **Hebrew / English UI with RTL support**: language toggle in the top bar, on the login page and in Profile → Settings. The choice is saved in `localStorage`, `<html dir>` flips to `rtl` for Hebrew, and the AI assistant answers in the chosen language (`language` field in the chat request).
@@ -51,7 +52,7 @@ Freeway/
 │       ├── routes/            # one file per feature: auth, users, vehicles, bookings, stats, ai, health
 │       ├── controllers/       # one file per feature
 │       ├── services/          # business logic + SQL (incl. gemini.service.js, aiChat, aiRecommendations, aiContext)
-│       ├── ai/prompts.js      # Gemini system prompts + JSON schema
+│       ├── ai/                # prompts.js (system prompts + JSON schema), tools.js (AI actions)
 │       ├── db/                # schema.sql, migrate.js, seed.js
 │       └── utils/             # AppError.js, dates.js
 └── frontend/

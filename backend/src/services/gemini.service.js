@@ -131,3 +131,79 @@ export async function streamText(systemPrompt, messages, onChunk) {
     clearTimeout(timer);
   }
 }
+
+// Streaming + tools (function calling). Gemini may answer with a "function call" instead of text;
+// then we run the tool with runTool(name, args), send the result back to Gemini and let it continue.
+// At most MAX_TOOL_ROUNDS rounds, so a confused model can never loop forever.
+// Returns { text, actions } - actions is the list of tools that were executed.
+const MAX_TOOL_ROUNDS = 3;
+
+export async function streamWithTools(systemPrompt, messages, toolDeclarations, runTool, onChunk) {
+  const ai = getClient();
+  const controller = new AbortController();
+  let timedOut = false;
+  const timer = setTimeout(() => {
+    timedOut = true;
+    controller.abort();
+  }, env.aiTimeoutMs);
+
+  const contents = [...messages];
+  const actions = [];
+  let fullText = '';
+
+  try {
+    for (let round = 0; round <= MAX_TOOL_ROUNDS; round++) {
+      const stream = await ai.models.generateContentStream({
+        model: env.geminiModel,
+        contents: contents,
+        config: {
+          systemInstruction: systemPrompt,
+          temperature: 0.4,
+          maxOutputTokens: 800,
+          tools: [{ functionDeclarations: toolDeclarations }],
+          abortSignal: controller.signal,
+        },
+      });
+
+      // Collect the model's parts exactly as they arrive. Text parts are streamed to the user,
+      // functionCall parts are tool requests. (The parts are sent back as-is in the next round,
+      // because Gemini needs its own call parts - including the thought signature - to continue.)
+      const modelParts = [];
+      const calls = [];
+      for await (const chunk of stream) {
+        const candidate = chunk.candidates && chunk.candidates[0];
+        const parts = candidate && candidate.content && candidate.content.parts ? candidate.content.parts : [];
+        for (const part of parts) {
+          modelParts.push(part);
+          if (part.text && !part.thought) {
+            fullText += part.text;
+            onChunk(part.text);
+          }
+          if (part.functionCall) {
+            calls.push(part.functionCall);
+          }
+        }
+      }
+
+      // No tool requested -> the text answer is complete
+      if (calls.length === 0) {
+        break;
+      }
+
+      // Run every requested tool and give the results back to Gemini for the next round
+      const responseParts = [];
+      for (const call of calls) {
+        const result = await runTool(call.name, call.args || {});
+        actions.push({ name: call.name, args: call.args || {}, result: result });
+        responseParts.push({ functionResponse: { name: call.name, response: result } });
+      }
+      contents.push({ role: 'model', parts: modelParts });
+      contents.push({ role: 'user', parts: responseParts });
+    }
+    return { text: fullText, actions: actions };
+  } catch (err) {
+    throw toAppError(err, timedOut);
+  } finally {
+    clearTimeout(timer);
+  }
+}

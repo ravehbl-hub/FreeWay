@@ -5,7 +5,7 @@ import { query } from '../config/db.js';
 // The user's last 10 bookings as short text lines
 export async function getBookingsText(userId) {
   const result = await query(
-    `SELECT b.start_date, b.end_date, b.status, b.total_price, b.pickup_location,
+    `SELECT b.id AS booking_id, b.start_date, b.end_date, b.status, b.total_price, b.pickup_location,
             v.id AS vehicle_id, v.name, v.category, v.seats, v.transmission
      FROM bookings b JOIN vehicles v ON v.id = b.vehicle_id
      WHERE b.user_id = $1
@@ -17,7 +17,7 @@ export async function getBookingsText(userId) {
     return 'No bookings yet (new customer).';
   }
   const lines = result.rows.map((b) => {
-    return '- ' + b.start_date + ' to ' + b.end_date + ': ' + b.name + ' (id ' + b.vehicle_id + ', ' + b.category +
+    return '- booking id ' + b.booking_id + ': ' + b.start_date + ' to ' + b.end_date + ': ' + b.name + ' (id ' + b.vehicle_id + ', ' + b.category +
       ', ' + b.seats + ' seats, ' + b.transmission + '), status ' + b.status +
       ', paid ' + b.total_price + ' EUR, pickup ' + b.pickup_location;
   });

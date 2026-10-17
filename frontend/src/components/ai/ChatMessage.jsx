@@ -1,11 +1,11 @@
-// ChatMessage: one chat bubble. Links like /vehicles/5 in the AI answer become clickable.
+// ChatMessage: one chat bubble. Links like /vehicles/5 or /bookings in the AI answer become clickable.
 import { Link } from 'react-router-dom';
 
-// Splits the text into normal text and /vehicles/<id> links
+// Splits the text into normal text and /vehicles/<id> or /bookings links
 function renderText(text) {
-  const parts = text.split(/(\/vehicles\/\d+)/g);
+  const parts = text.split(/(\/vehicles\/\d+|\/bookings)/g);
   return parts.map((part, index) => {
-    if (/^\/vehicles\/\d+$/.test(part)) {
+    if (/^(\/vehicles\/\d+|\/bookings)$/.test(part)) {
       return (
         <Link key={index} to={part}>
           {part}

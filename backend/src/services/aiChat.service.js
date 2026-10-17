@@ -5,7 +5,8 @@ import { todayISO } from '../utils/dates.js';
 import { CHAT_SYSTEM_PROMPT, fillTemplate } from '../ai/prompts.js';
 import { INSURANCE_PER_DAY } from './bookings.service.js';
 import { getBookingsText, getVehiclesText } from './aiContext.service.js';
-import { generateText, streamText } from './gemini.service.js';
+import { streamWithTools } from './gemini.service.js';
+import { TOOL_DECLARATIONS, runTool } from '../ai/tools.js';
 
 const HISTORY_LIMIT = 10; // how many previous messages we send to Gemini
 
@@ -113,16 +114,31 @@ async function saveTurn(user, message, conversationId, answer) {
   return { conversationId: id, reply: reply };
 }
 
+// Runs one chat turn with Gemini + the tools (create_booking / cancel_booking).
+// runTool is bound to the current user, so the AI can only act on this user's bookings.
+async function askGemini(user, chat, onChunk) {
+  const result = await streamWithTools(
+    chat.systemPrompt,
+    chat.history,
+    TOOL_DECLARATIONS,
+    (name, args) => runTool(name, args, user),
+    onChunk
+  );
+  return result;
+}
+
 // Normal (non streaming) chat: returns the full answer at once
 export async function sendMessage(user, message, conversationId, language) {
   const chat = await prepareChat(user, message, conversationId, language);
-  const answer = await generateText(chat.systemPrompt, chat.history);
-  return saveTurn(user, message, conversationId, answer);
+  const result = await askGemini(user, chat, () => {});
+  const saved = await saveTurn(user, message, conversationId, result.text);
+  return { ...saved, actions: result.actions };
 }
 
 // Streaming chat: onChunk is called for every piece of text
 export async function streamMessage(user, message, conversationId, onChunk, language) {
   const chat = await prepareChat(user, message, conversationId, language);
-  const answer = await streamText(chat.systemPrompt, chat.history, onChunk);
-  return saveTurn(user, message, conversationId, answer);
+  const result = await askGemini(user, chat, onChunk);
+  const saved = await saveTurn(user, message, conversationId, result.text);
+  return { ...saved, actions: result.actions };
 }

@@ -29,7 +29,7 @@ export async function chatStream(req, res) {
       (text) => send({ type: 'chunk', text: text }),
       req.body.language
     );
-    send({ type: 'done', conversationId: result.conversationId, reply: result.reply });
+    send({ type: 'done', conversationId: result.conversationId, reply: result.reply, actions: result.actions });
   } catch (err) {
     // Headers were already sent, so the error is sent as an event with its status code
     send({ type: 'error', status: err.statusCode || 500, message: err.statusCode ? err.message : 'AI error' });
