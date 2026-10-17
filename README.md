@@ -11,7 +11,7 @@ own booking history. Admins manage vehicles, all bookings and users.
 
 - **Auth**: register / login with JWT, passwords hashed with bcrypt, roles `user` and `admin`.
 - **What's new popup**: shown once after every deploy (build id, commit message and date are injected by Vite; change list lives in `frontend/src/version.js`).
-- **AI suggestions with actions**: every vehicle the assistant mentions gets a row with Details (popup with picture and specs) and Book buttons.
+- **AI suggestions with actions**: every vehicle the assistant mentions gets a row with Details (popup with picture and specs) and Book. Book creates the booking in one click, using dates written in the chat (or tomorrow + 3 days), and shows Pay / Change links.
 - **Pickup locations on a real map** (Leaflet + OpenStreetMap): the dashboard lists all 11 branches; a popup shows them on the map.
 - **Branch availability on every vehicle card**: "Available in n/11 branches" + the branch names.
 - **User menu** (top bar): Profile, Payment method, Log out. The payment method page shows the demo card and the bookings waiting for payment.

@@ -18,11 +18,11 @@ function renderText(text) {
   });
 }
 
-export default function ChatMessage({ role, content, streaming = false }) {
+export default function ChatMessage({ role, content, streaming = false, contextText = '' }) {
   return (
     <div className={'chat-message chat-' + role}>
       <div className="chat-bubble">{renderText(content)}</div>
-      {role === 'assistant' && !streaming && <ChatVehicleActions text={content} />}
+      {role === 'assistant' && !streaming && <ChatVehicleActions text={content} contextText={contextText} />}
     </div>
   );
 }

@@ -554,3 +554,94 @@
     flex-wrap: wrap;
   }
 }
+
+.chat-vehicle-block {
+  display: grid;
+  gap: 6px;
+}
+
+.chat-booked {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  background: var(--green-soft);
+  color: var(--green-dark);
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 13px;
+}
+
+.chat-booked p {
+  margin: 2px 0 8px;
+  color: var(--green-dark);
+}
+
+/* AI Assistant on phones: chat first, conversations as a scrollable strip, full-width actions */
+@media (max-width: 760px) {
+  .assistant-layout {
+    gap: 12px;
+  }
+
+  .assistant-layout .chat-window {
+    order: 1;
+    height: calc(100vh - 330px);
+    min-height: 380px;
+  }
+
+  .assistant-layout .conversation-list {
+    order: 2;
+    padding: 12px;
+  }
+
+  .conversation-list ul {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 6px;
+    margin-top: 10px;
+    padding-bottom: 4px;
+  }
+
+  .conversation-list li {
+    flex: 0 0 auto;
+    max-width: 200px;
+    background: var(--card-soft);
+  }
+
+  .conversation-title {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  .chat-empty [class*='suggest'] {
+    grid-template-columns: 1fr;
+  }
+
+  .chat-form {
+    position: sticky;
+    bottom: 0;
+    background: #fff;
+    padding-top: 8px;
+  }
+
+  .chat-form input {
+    min-width: 0;
+    padding: 11px 14px;
+  }
+
+  .chat-vehicles {
+    max-width: 100%;
+  }
+
+  .chat-vehicle-buttons {
+    width: 100%;
+  }
+
+  .chat-vehicle-buttons .button {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .popup-vehicle-image {
+    height: 160px;
+  }
+}

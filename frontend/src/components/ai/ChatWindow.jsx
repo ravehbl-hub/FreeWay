@@ -54,7 +54,12 @@ export default function ChatWindow({ messages, streamingText, sending, error, on
           </div>
         )}
         {messages.map((message, index) => (
-          <ChatMessage key={message.id || index} role={message.role} content={message.content} />
+          <ChatMessage
+            key={message.id || index}
+            role={message.role}
+            content={message.content}
+            contextText={index > 0 ? messages[index - 1].content : ''}
+          />
         ))}
         {sending && <ChatMessage role="assistant" content={streamingText || t('common.thinking')} streaming />}
         <div ref={bottomRef} />
