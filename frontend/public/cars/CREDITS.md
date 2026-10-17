@@ -10,7 +10,7 @@ All car photos come from Wikimedia Commons (free licenses). Backgrounds were rem
 - volvo-ex30.png - https://commons.wikimedia.org/wiki/File:2024%20Volvo%20EX30%20Front.jpg
 - kia-sorento.png - https://commons.wikimedia.org/wiki/File:2021%20Kia%20Sorento%20LX%20Plus%2C%20Front%20Left%2C%2001-17-2021.jpg
 - mercedes-c-class.png - https://commons.wikimedia.org/wiki/File:Mercedes-Benz%20C%20220%20BlueTEC%20Exclusive%20%28W%20205%29%20%E2%80%93%20Frontansicht%2C%2012.%20Juli%202014%2C%20D%C3%BCsseldorf.jpg
-- bmw-i4.png - https://commons.wikimedia.org/wiki/File:BMW%20i4%20M50%201X7A7379.jpg
+- bmw-i4.png - https://commons.wikimedia.org/wiki/File:BMW%20G26E%20i4%20eDrive40%20M%20Sport%20M%20Portimao%20Blue%20Metallic%20%282%29.jpg
 - bmw-4-series.png - https://commons.wikimedia.org/wiki/File:2020%20BMW%204.jpg
 - volkswagen-beetle.png - https://commons.wikimedia.org/wiki/File:Oranger%20VW%20New%20Beetle%2020210524%20DSC09751.jpg
 - tesla-model-3.png - https://commons.wikimedia.org/wiki/File:Tesla%20Model%203%20%282023%29%20Auto%20Zuerich%202023%201X7A1313.jpg
