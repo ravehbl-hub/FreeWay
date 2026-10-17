@@ -10,7 +10,12 @@ const folder = path.dirname(fileURLToPath(import.meta.url));
 
 async function migrate() {
   if (!env.databaseUrl) {
-    throw new Error('DATABASE_URL is not set. On Railway add the variable DATABASE_URL=${{Postgres.DATABASE_URL}} to the backend service.');
+    // List the names (never the values) of database-looking variables, to help debug hosting setups
+    const names = Object.keys(process.env).filter((name) => /DATABASE|POSTGRES|PG/i.test(name));
+    throw new Error(
+      'DATABASE_URL is not set. On Railway add the variable DATABASE_URL=${{Postgres.DATABASE_URL}} to the backend service. ' +
+      'Database-related variables found: ' + (names.length ? names.join(', ') : 'none')
+    );
   }
   const sql = await fs.readFile(path.join(folder, 'schema.sql'), 'utf8');
   try {
